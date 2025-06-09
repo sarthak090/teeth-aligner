@@ -1,0 +1,35 @@
+[
+  {
+    "title": "Resources",
+    "links": [
+      { "href": "/blog", "label": "Dental Blog" },
+      { "href": "/treatment-process", "label": "Treatment Process" },
+      { "href": "/before-after", "label": "Before & After" },
+      { "href": "/faq", "label": "FAQ" },
+      { "href": "/pricing", "label": "Pricing" },
+      { "href": "/testimonials", "label": "Patient Stories" }
+    ]
+  },
+  {
+    "title": "Company",
+    "links": [
+      { "href": "/about", "label": "About Us" },
+      { "href": "/our-doctors", "label": "Our Doctors" },
+      { "href": "/contact", "label": "Contact" },
+      { "href": "/terms", "label": "Terms of Service" },
+      { "href": "/policy", "label": "Privacy Policy" },
+      { "href": "/careers", "label": "Careers" }
+    ]
+  },
+  {
+    "title": "Quick Links",
+    "links": [
+      { "href": "/book-consultation", "label": "Book Consultation" },
+      { "href": "/treatment-options", "label": "Treatment Options" },
+      { "href": "/insurance", "label": "Insurance" },
+      { "href": "/payment-plans", "label": "Payment Plans" },
+      { "href": "/locations", "label": "Our Locations" },
+      { "href": "/emergency", "label": "Emergency Care" }
+    ]
+  }
+]

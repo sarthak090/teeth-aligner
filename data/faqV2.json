@@ -1,0 +1,81 @@
+[
+  [
+    {
+      "id": 1,
+      "question": "What is AlignersFit?",
+      "answer": "AlignersFit is a leading provider of clear aligners for teeth straightening. We offer affordable, high-quality, and FDA-approved clear aligners that help you achieve a beautiful smile without the hassle of traditional braces. Our treatment is supervised by licensed orthodontists and uses advanced 3D technology for precise results."
+    },
+    {
+      "id": 2,
+      "question": "How does the AlignersFit treatment process work?",
+      "answer": "Our treatment process is simple and convenient: 1) Start with an online assessment or visit a partner clinic, 2) Receive a custom 3D treatment plan, 3) Get your custom-made aligners delivered to your door, 4) Change aligners every 2 weeks as prescribed, 5) Regular check-ins with our orthodontic team. The entire process is monitored by licensed professionals to ensure optimal results."
+    },
+    {
+      "id": 3,
+      "question": "How long does AlignersFit treatment take?",
+      "answer": "Treatment duration varies by individual case, but most patients complete their treatment in 6-12 months. You'll receive a personalized treatment timeline during your initial assessment. Regular progress tracking and check-ins ensure you stay on track to achieve your desired results."
+    },
+    {
+      "id": 4,
+      "question": "Is AlignersFit treatment suitable for everyone?",
+      "answer": "While AlignersFit can address many orthodontic issues, some complex cases may require traditional braces. Our initial assessment will determine if our treatment is right for you. We can treat common issues like crowding, spacing, and mild to moderate bite problems. For severe cases, we'll recommend the most appropriate treatment option."
+    }
+  ],
+  [
+    {
+      "id": 5,
+      "question": "What makes AlignersFit different from other aligner companies?",
+      "answer": "AlignersFit stands out through our combination of affordability, quality, and professional care. We use premium materials for our aligners, provide 24/7 customer support, offer flexible payment plans, and ensure each treatment is supervised by licensed orthodontists. Our aligners are FDA-approved and made with medical-grade materials for maximum comfort and effectiveness."
+    },
+    {
+      "id": 6,
+      "question": "Are AlignersFit aligners comfortable to wear?",
+      "answer": "Yes, AlignersFit aligners are designed for maximum comfort. Made from medical-grade materials, they're smooth and gentle on your gums and cheeks. While you may experience slight pressure when changing to new aligners, this is normal and indicates the aligners are working. Any initial discomfort typically subsides within 1-2 days."
+    },
+    {
+      "id": 7,
+      "question": "How do I care for my AlignersFit aligners?",
+      "answer": "Clean your aligners daily using our specialized cleaning solution or a soft toothbrush with mild soap. Rinse them before reinserting and store them in their case when not in use. Avoid hot water as it can warp the aligners. We provide a complete care kit with your aligners to help maintain their quality throughout treatment."
+    },
+    {
+      "id": 8,
+      "question": "Can I eat and drink while wearing my aligners?",
+      "answer": "You should remove your aligners while eating or drinking anything other than water. This helps maintain the aligners' clarity and prevents damage. Remember to brush your teeth before reinserting the aligners to maintain good oral hygiene throughout your treatment."
+    }
+  ],
+  [
+    {
+      "id": 9,
+      "question": "How much does AlignersFit treatment cost?",
+      "answer": "AlignersFit treatment is significantly more affordable than traditional braces, typically costing 60-70% less. Our pricing is transparent with no hidden fees, and we offer flexible payment plans to make treatment accessible. The exact cost depends on your specific case, which we'll determine during your initial assessment."
+    },
+    {
+      "id": 10,
+      "question": "Do you offer payment plans?",
+      "answer": "Yes, we offer flexible payment plans to make treatment more accessible. You can choose from various payment options, including monthly installments. Our team will work with you to find a payment plan that fits your budget. All payment plans are interest-free and have no hidden fees."
+    },
+    {
+      "id": 11,
+      "question": "Is the treatment covered by insurance?",
+      "answer": "Many dental insurance plans cover a portion of orthodontic treatment, including clear aligners. We can help you verify your insurance coverage and submit claims. Our team will work with your insurance provider to maximize your benefits and minimize out-of-pocket costs."
+    }
+  ],
+  [
+    {
+      "id": 12,
+      "question": "How do I track my treatment progress?",
+      "answer": "We provide a user-friendly app that helps you track your treatment progress. You can take progress photos, receive reminders for aligner changes, and communicate with our orthodontic team. Regular virtual check-ins ensure your treatment is progressing as planned."
+    },
+    {
+      "id": 13,
+      "question": "What happens if I lose or damage my aligner?",
+      "answer": "If you lose or damage an aligner, contact our support team immediately. We'll help you determine whether to move to your next set or order a replacement. Our team is available 24/7 to assist with any issues, ensuring your treatment stays on track."
+    },
+    {
+      "id": 14,
+      "question": "What happens after I complete my treatment?",
+      "answer": "After completing your treatment, you'll receive custom retainers to maintain your new smile. We provide detailed instructions for retainer wear, typically starting with full-time wear and transitioning to nighttime wear. Our team continues to support you during this maintenance phase."
+    }
+  ]
+   
+]

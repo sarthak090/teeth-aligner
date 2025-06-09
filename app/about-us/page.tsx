@@ -17,7 +17,7 @@ export const metadata = {
 const AboutPage = async () => {
   const data = await getAboutPageData()
  const globalData = await getGlobalData()
-  console.log(globalData)
+   
   return (
     <LayoutOne>
       <AboutHero heading={data.acf.heading} description={data.acf.description} />

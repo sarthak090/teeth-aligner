@@ -54,9 +54,43 @@ const businessSolutionServices: MarkdownData[] = [
 ]
 
 const sliceOne = businessSolutionServices
- 
+ type Props ={
+  featured_icons:{
+    clear_aligners:{content:string}
+    digital_scanning:{content:string}
+    treatment_planning:{content:string}
+    remote_planning:{content:string}
+  }
+}
 
-const ServicesV11 = () => {
+const ServicesV11 = ({featured_icons}:Props) => {
+
+  const {clear_aligners,digital_scanning,treatment_planning,remote_planning} = featured_icons
+  const data = [{
+    id:1,
+    title:'Clear Aligners',
+    description:clear_aligners.content,
+    icon:<ClearAligners className='text-primary' />
+  },
+  {
+    id:2,
+    title:'Digital Scanning',
+    description:digital_scanning.content,
+    icon:<DentalScan className='text-primary' />
+  },
+  {
+    id:3,
+    title:'Treatment Planning',
+    description:treatment_planning.content,
+    icon:<TeethReport className='text-primary' />
+  },
+  {
+    id:4,
+    title:'Remote Monitoring',
+    description:remote_planning.content,
+    icon:<ComputerDental className='text-primary' />
+  }]
+  
   return (
     <section className="">
      
@@ -87,9 +121,9 @@ const ServicesV11 = () => {
               </div>
             </div>
           </RevealWrapper>
-        {sliceOne.map((service) => (
+        {data.map((service) => (
           <RevealWrapper
-            key={service.slug}
+            key={service.id}
             className="group relative min-h-[260px] w-full overflow-hidden ">
             <div>
               {/* Front Side */}

@@ -38,8 +38,45 @@ const data = [
   },
 ]
 
-const IntheBoxHorizontalScroll = () => {
-  return (
+type Props ={
+  whats_in_the_box:{
+    chewie:{
+      heading:string,
+      description:string,
+      
+    },
+    retriver:{
+      heading:string,
+      description:string,
+    },
+    cleaning_foam:{
+      heading:string,
+      description:string,
+    }
+  }
+}
+
+const IntheBoxHorizontalScroll = ({whats_in_the_box}:Props) => {
+  const {chewie,retriver,cleaning_foam} = whats_in_the_box
+  const data = [{
+    id:1,
+    title:chewie.heading,
+    description:chewie.description,
+    component:<SplineChewie />
+  },
+  {
+    id:2,
+    title:retriver.heading,
+    description:retriver.description,
+    component:<SplineTeethRetriver />
+  },
+  {
+    id:3,
+    title:cleaning_foam.heading,
+    description:cleaning_foam.description,
+    component:<SplineTube />
+  }]
+      return (
     <section
       className="service-section overflow-hidden bg-secondary pb-14 pt-14 md:pb-16 md:pt-16 lg:pb-[88px] lg:pt-[88px] xl:pb-[100px] xl:pt-[100px]"
       aria-labelledby="solutions-heading">

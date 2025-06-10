@@ -66,29 +66,25 @@ const sliceOne = businessSolutionServices
 const ServicesV11 = ({featured_icons}:Props) => {
 
   const {clear_aligners,digital_scanning,treatment_planning,remote_planning} = featured_icons
-  const data = [{
-    id:1,
-    title:'Clear Aligners',
-    description:clear_aligners.content,
-    icon:<ClearAligners className='text-primary' />
-  },
+  const data = [
+    
   {
     id:2,
     title:'Digital Scanning',
     description:digital_scanning.content,
-    icon:<DentalScan className='text-primary' />
+    icon:<DentalScan  width={100} height={100} className='text-primary' />
   },
   {
     id:3,
     title:'Treatment Planning',
     description:treatment_planning.content,
-    icon:<TeethReport className='text-primary' />
+    icon:<TeethReport  width={100} height={100} className='text-primary' />
   },
   {
     id:4,
     title:'Remote Monitoring',
     description:remote_planning.content,
-    icon:<ComputerDental className='text-primary' />
+    icon:<ComputerDental  width={100} height={100} className='text-primary' />
   }]
   
   return (
@@ -116,7 +112,7 @@ const ServicesV11 = ({featured_icons}:Props) => {
                 <h5 className="mb-3 mt-9 text-2xl leading-[1.2] -tracking-[1.08px] text-backgroundBody dark:text-secondary">
                     Clear Aligners
                 </h5>
-                <p className="mb-10 text-backgroundBody dark:text-secondary">Custom-made, virtually invisible aligners that gradually straighten your teeth without metal brackets or wires.</p>
+                <p className="mb-10 text-backgroundBody dark:text-secondary">{clear_aligners.content}</p>
                  
               </div>
             </div>

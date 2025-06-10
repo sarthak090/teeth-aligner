@@ -33,8 +33,9 @@ function ProductDisplay() {
 }
 
 export default async function InClinicPackageOne() {
-  const data = await getGlobalData()
   const product = await getInclinicPackageData()
+  const data = product.global_content
+  // console.log()
 
   return (
     <LayoutOne>

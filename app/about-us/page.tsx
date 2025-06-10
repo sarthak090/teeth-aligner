@@ -16,7 +16,7 @@ export const metadata = {
 
 const AboutPage = async () => {
   const data = await getAboutPageData()
- const globalData = await getGlobalData()
+ const globalData = data.global_content
    
   return (
     <LayoutOne>

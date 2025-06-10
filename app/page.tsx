@@ -79,15 +79,34 @@ import WhatIs from '@/components/homepage-06/what-is'
 import BlogPostV7 from '@/components/homepage-12/BlogPostV7'
 import Customer from '@/components/homepage-06/Customer'
 import OurWork from '@/components/homepage-07/OurWork'
-import { getGlobalData, getHomePageData } from '@/actions/queries'
-  export const metadata = {
-  title: 'AlignersFit',
-}
+import {  getHomePageData } from '@/actions/queries'
+ 
+export const generateMetadata = async () => {
+  const data = await getHomePageData()
+  const customData = data.custom_data
+  const seoData = customData.rank_math
+  return {
+    title: seoData.title,
+    description: seoData.description,
+    keywords: seoData.focus_keyword,
+    robots: seoData.robots,
+    canonical: seoData.canonical,
+    openGraph: {
+      title: seoData.title,
+      description: seoData.description,
+      images: [seoData.image],
+      url: seoData.canonical,
+      siteName: seoData.site_name,
+      locale: seoData.locale,
+      type: seoData.type,
+    }
 
+  }
+}
 
 const HomePage = async () => {
   const data = await getHomePageData()
-  const globalData = await getGlobalData()
+  const globalData = data.global_content
   
   return (
     <LayoutOne>

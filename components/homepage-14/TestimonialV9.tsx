@@ -120,7 +120,7 @@ and dental professionals alike.
         <Swiper
           spaceBetween={30}
           modules={[Navigation]}
-          className="!pl-[20%]"
+          className="md:!pl-[20%]"
           navigation={{
             prevEl: '.swiper-prev-btn',
             nextEl: '.swiper-next-btn',

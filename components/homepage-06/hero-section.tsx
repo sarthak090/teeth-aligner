@@ -1,42 +1,40 @@
-'use client' 
-import DetnalAppointment from "./icons/detnal-appointment";
-import { useRef } from "react";
-import gsap from "gsap";
-import { ScrollTrigger } from "gsap/ScrollTrigger";
-import { useGSAP } from "@gsap/react";
-import HeroBgVideo from "./hero-bg-video"; 
-import Link from "next/link"; 
-import RevealWrapper from "../animation/RevealWrapper";
-if (typeof window !== 'undefined'){
-  gsap.registerPlugin(ScrollTrigger, useGSAP);
+'use client'
+import DetnalAppointment from './icons/detnal-appointment'
+import { useRef } from 'react'
+import gsap from 'gsap'
+import { ScrollTrigger } from 'gsap/ScrollTrigger'
+import { useGSAP } from '@gsap/react'
+import HeroBgVideo from './hero-bg-video'
+import Link from 'next/link'
+import RevealWrapper from '../animation/RevealWrapper'
+if (typeof window !== 'undefined') {
+  gsap.registerPlugin(ScrollTrigger, useGSAP)
 }
 
- 
 type Data = {
-  normal_text?:string;
-  highlight_text?:string;
+  normal_text?: string
+  highlight_text?: string
 }
-export default function HeroSection({data}:{data?:Data}) {
-  const heroSectionRef = useRef(null);
- const breakText = data?.normal_text?.split(' ')
-  
-   
-  return (
-    <div className=" px-16 hero-section " ref={heroSectionRef}>
-      <HeroBgVideo />
-      <div className="flex flex-col z-[10]   justify-center items-center md:items-start  h-screen">
-      <div   className="hidden md:block md:absolute top-[180px] left-[-180px] -z-10 w-[600px] h-[600px] rounded-full bg-gradient-to-br from-[#005BD1] via-[#FFCB90] to-[#FF0004] opacity-50 blur-3xl"></div>
-      <div   className="hidden md:block md:absolute top-[100px] right-[-180px] -z-10 w-[600px] h-[600px] rounded-full bg-gradient-to-br from-[#005BD1] via-[#FFCB90] to-[#FF0004] opacity-50 blur-3xl"></div>
+export default function HeroSection({ data }: { data?: Data }) {
+  const heroSectionRef = useRef(null)
+  const breakText = data?.normal_text?.split(' ')
 
-        <h1 className="md:text-8xl text-gray-700 text-7xl z-10 text-center md:text-left font-semibold">
-        <RevealWrapper>
-         
-          <span className="text-gray-700">  {breakText?.length ? breakText[0] :'Solution to'} {breakText && breakText[1]} </span>   <br/>
-          <span className="text-gray-700">  {breakText?.length ? breakText[2] :'Perfect'}  </span>   <br/>
-          <span className="orange-gradient-text">
-            {data?.highlight_text ? data?.highlight_text : 'Smile'}
-          </span>
-         
+  return (
+    <div className="hero-section px-4 md:px-16" ref={heroSectionRef}>
+      <HeroBgVideo />
+      <div className="z-[10] flex h-screen flex-col items-center justify-center md:items-start">
+        <div className="left-[-180px] top-[180px] -z-10 hidden h-[600px] w-[600px] rounded-full bg-gradient-to-br from-[#005BD1] via-[#FFCB90] to-[#FF0004] opacity-50 blur-3xl md:absolute md:block"></div>
+        <div className="right-[-180px] top-[100px] -z-10 hidden h-[600px] w-[600px] rounded-full bg-gradient-to-br from-[#005BD1] via-[#FFCB90] to-[#FF0004] opacity-50 blur-3xl md:absolute md:block"></div>
+
+        <h1 className="z-10 mt-72 md:mt-0 text-center text-[3.2rem] font-semibold text-gray-700 md:text-left md:text-8xl">
+          <RevealWrapper>
+            <span className="text-gray-700">
+              {' '}
+              {breakText?.length ? breakText[0] : 'Solution to'} {breakText && breakText[1]}{' '}
+            </span>{' '}
+            <br />
+            <span className="text-gray-700"> {breakText?.length ? breakText[2] : 'Perfect'} </span> <br />
+            <span className="orange-gradient-text">{data?.highlight_text ? data?.highlight_text : 'Smile'}</span>
           </RevealWrapper>
         </h1>
 
@@ -47,19 +45,17 @@ export default function HeroSection({data}:{data?:Data}) {
         </button>
         </Link> */}
 
-        <Link href="https://api.leadconnectorhq.com/widget/bookings/alignersfit-invisalign" className="rv-button rv-button-secondary  mt-10">
-                  <div className="rv-button-top  !w-full !text-center">
-                    <span className="!font-normal"> Order Now</span>
-                  </div>
-                  <div className="rv-button-bottom !w-full !text-center">
-                    <span className="!font-normal"> Get Started</span>
-                  </div>
-                </Link>
-        
-
+        <Link
+          href="https://api.leadconnectorhq.com/widget/bookings/alignersfit-invisalign"
+          className="rv-button rv-button-secondary mt-10">
+          <div className="rv-button-top !w-full !text-center">
+            <span className="!font-normal"> Order Now</span>
+          </div>
+          <div className="rv-button-bottom !w-full !text-center">
+            <span className="!font-normal"> Get Started</span>
+          </div>
+        </Link>
       </div>
-
-       
     </div>
-  );
+  )
 }

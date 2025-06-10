@@ -84,7 +84,7 @@ const Customer  = ({data} :{data: Data[]}) => {
     <section className="pb-14 pt-14 md:pb-16 md:pt-16 lg:pb-[88px] lg:pt-[88px] xl:pb-[10px] xl:pt-[100px]">
       <RevealWrapper>
         <Swiper
-          className="!pl-[10%]"
+          className="md:!pl-[10%]"
           spaceBetween={24}
           modules={[Navigation]}
           navigation={{

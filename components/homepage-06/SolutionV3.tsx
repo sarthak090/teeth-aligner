@@ -104,13 +104,13 @@ const IntheBoxHorizontalScroll = ({whats_in_the_box}:Props) => {
         className="container mx-auto mt-16"
         // className="service-wrapper mt-16 flex flex-col gap-6 overflow-x-hidden max-md:px-5 md:w-fit md:flex-row md:flex-nowrap md:pl-[20%] md:pr-10"
         aria-label="Our service offerings">
-        <div className="grid grid-cols-2  bg-orange-gradient">
+        <div className="grid md:grid-cols-2  bg-orange-gradient">
           <div className="col-span-1 space-y-1 border-r-2  border-secondary">
             {data.slice(0, 2).map((item) => (
-              <div key={item.id} className="relative p-4 border-t-2 border-secondary">
-                <h3 className='text-white font-semibold   mt-16 mb-4'>{item.title}</h3>
-                <p className='text-white text-md'>{item.description}</p>
-                <div className="  w-full z-50 translate-y-5">{item.component}</div>
+              <div key={item.id} className="relative p-4 border-t-2 border-secondary flex flex-col items-center justify-center">
+                <h3 className='text-white font-semibold text-left   mt-16 mb-4'>{item.title}</h3>
+                <p className='text-white text-md text-left'>{item.description}</p>
+                <div className="  md:w-full z-50 md:translate-y-5 w-[90%] h-72   ">{item.component}</div>
               </div>
             ))}
           </div>

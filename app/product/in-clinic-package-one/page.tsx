@@ -1,4 +1,3 @@
-
 import ConditionsCarousel from '@/components/conditions-carousel'
 import ImageMarque from '@/components/homepage-04/ImageMarque'
 import TestimonialV5 from '@/components/homepage-04/TestimonialV5'
@@ -9,12 +8,14 @@ import LayoutOne from '@/components/shared/LayoutOne'
 import TreatmentProcess from '@/components/treatment-process'
 import IntheBoxHorizontalScroll from '@/components/homepage-06/SolutionV3'
 import RevealWrapper from '@/components/animation/RevealWrapper'
-import Link from 'next/link'
 import ServicesV11 from '@/components/homepage-06/ServicesV11'
-import FaqV2 from '@/components/shared/FaqV2'
 import FaqV1 from '@/components/shared/FAQ'
 import dynamic from 'next/dynamic'
-import { getGlobalData, getInclinicPackageData } from '@/actions/queries'
+import {   getInclinicPackageData } from '@/actions/queries'
+import { useCartStore } from '@/store/cartStore'
+import { toast } from 'sonner'
+import { Toaster } from 'sonner'
+import ProductActions from '@/components/ProductActions'
 
 
   // const SplineFullBox = dynamic(() => import('@/components/3d/SplineFullBox'), {
@@ -24,6 +25,28 @@ import { getGlobalData, getInclinicPackageData } from '@/actions/queries'
 const Customer = dynamic(() => import('@/components/homepage-06/Customer'),  )
 const OurWork = dynamic(() => import('@/components/homepage-07/OurWork'),  )
 
+export const generateMetadata = async ({ params }: { params: { slug: string } }) => {
+  const product = await getInclinicPackageData()
+  const customData = product.custom_data
+  const seoData = customData.rank_math
+  return {
+    title: seoData.title,
+    description: seoData.description,
+    keywords: seoData.focus_keyword,
+    robots: seoData.robots,
+    canonical: seoData.canonical,
+    openGraph: {
+      title: seoData.title,
+      description: seoData.description,
+      images: [seoData.image],
+      url: seoData.canonical,
+      siteName: seoData.site_name,
+      locale: seoData.locale,
+      type: seoData.type,
+    }
+
+  }
+}
 function ProductDisplay() {
   return (
     <div className="relative h-[90%] w-full">
@@ -32,13 +55,30 @@ function ProductDisplay() {
   )
 }
 
+
+
 export default async function InClinicPackageOne() {
   const product = await getInclinicPackageData()
   const data = product.global_content
   // console.log()
 
+  const handleAddToCart = () => {
+    try {
+      useCartStore.getState().addItem({
+        id: product.id,
+        name: product.acf.product_name,
+        price: product.acf.pricing,
+        quantity: 1,
+      })
+      toast.success('Item added to cart successfully!')
+    } catch (error) {
+      toast.error('Failed to add item to cart')
+    }
+  }
+
   return (
     <LayoutOne>
+      <Toaster position="top-right" />
       <div className=" ">
         <div className="mx-auto max-w-7xl px-4 py-24">
           <div className="grid gap-12 md:grid-cols-2">
@@ -64,16 +104,11 @@ export default async function InClinicPackageOne() {
               <ServicesV11 featured_icons={product.acf.featured_icons} />
 
               {/* Enhanced CTA Section */}
-              <RevealWrapper className="reveal-me mt-7 md:mt-14">
-                <Link href="/contact" className="rv-button rv-button-secondary mt-10 w-full">
-                  <div className="rv-button-top !w-full !text-center">
-                    <span className="!font-normal">Buy Now</span>
-                  </div>
-                  <div className="rv-button-bottom !w-full !text-center">
-                    <span className="!font-normal">Buy Now</span>
-                  </div>
-                </Link>
-              </RevealWrapper>
+              <ProductActions
+                productId={product.id}
+                productName={product.acf.product_name}
+                price={product.acf.pricing}
+              />
             </div>
           </div>
 

@@ -11,6 +11,7 @@ import { useCallback, useEffect, useLayoutEffect, useRef, useState } from 'react
 import { SocialIcons } from '@/components/navbarCompo/social-icons'
 import { MenuList } from '../navbarCompo/menu-list'
 import RevealWrapper from '../animation/RevealWrapper'
+import CartIcon from '@/components/CartIcon'
 
 interface MenuItemProps {
   title: string
@@ -370,27 +371,14 @@ export default function Navbar() {
                       key={item.title}
                       href={item.url}
                       className="blog-title text-md menu-item font-semibold text-slate-700">
-                      {/* {item.title} */}
                       <div className="blog-title underline-hover-effect mb-9 font-semibold">
                         <h3 className="text-[18px] leading-[1.2] -tracking-[1.08px]">{item.title}</h3>
                       </div>
                     </Link>
                   ))}
-                  <Link href="/cart" className="menu-item text-slate-700">
-                    <svg
-                      xmlns="http://www.w3.org/2000/svg"
-                      fill="none"
-                      viewBox="0 0 24 24"
-                      strokeWidth={1.5}
-                      stroke="currentColor"
-                      className="h-6 w-6 -translate-y-4">
-                      <path
-                        strokeLinecap="round"
-                        strokeLinejoin="round"
-                        d="M2.25 3h1.386c.51 0 .955.343 1.087.835l.383 1.437M7.5 14.25a3 3 0 00-3 3h15.75m-12.75-3h11.218c1.121-2.3 2.1-4.684 2.924-7.138a60.114 60.114 0 00-16.536-1.84M7.5 14.25L5.106 5.272M6 20.25a.75.75 0 11-1.5 0 .75.75 0 011.5 0zm12.75 0a.75.75 0 11-1.5 0 .75.75 0 011.5 0z"
-                      />
-                    </svg>
-                  </Link>
+                  <div className="menu-item -translate-y-4">
+                    <CartIcon />
+                  </div>
                 </ul>
               </div>
 

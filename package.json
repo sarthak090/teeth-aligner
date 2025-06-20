@@ -4,7 +4,7 @@
   "private": true,
   "scripts": {
     "dev": "next dev --turbopack",
-    "build": "next build && npm run generate-sitemap",
+    "build": "next build",
     "start": "next start",
     "lint": "eslint app --ext ts,tsx,js,jsx,cjs --report-unused-disable-directives --max-warnings 0",
     "lint:fix": "eslint app --ext js,jsx,ts,tsx,cjs --fix",

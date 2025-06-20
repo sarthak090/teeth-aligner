@@ -79,7 +79,7 @@ const HeroV5 = () => {
 
           <ul className="mt-14 flex list-none justify-start">
             <li className="block w-full text-center md:inline-block md:w-auto">
-              <Link href="/pricing#pricing" className="rv-button rv-button-primary block md:inline-block">
+              <Link href="#pricing" className="rv-button rv-button-primary block md:inline-block">
                 <div className="rv-button-top">
                   <span>See Pricing</span>
                 </div>

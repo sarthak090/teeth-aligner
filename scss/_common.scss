@@ -828,3 +828,43 @@ html.lenis {
 .bg-orange-gradient {
   background: linear-gradient(90deg,#ffa41c,#ff362a);
 }
+
+.line_line {
+  position: absolute;
+  background-color: #bebebe;
+
+  &.line-top,
+  &.line-bottom {
+    left: -15px;
+    right: -15px;
+    height: 1px;
+
+    &.line-top {
+      top: 0;
+    }
+
+    &.line-bottom {
+      bottom: 0;
+    }
+  }
+
+  &.line-left,
+  &.line-right {
+    width: 1px;
+    top: -15px;
+    bottom: -15px;
+
+    &.line-left {
+      left: 0;
+    }
+
+    &.line-right {
+      right: 0;
+    }
+  }
+}
+
+.title-block {
+  letter-spacing: 2px;
+  font-size: 20px;
+}

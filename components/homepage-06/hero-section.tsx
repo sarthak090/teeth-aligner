@@ -48,11 +48,13 @@ export default function HeroSection({ data }: { data?: Data }) {
         <Link
           href="https://api.leadconnectorhq.com/widget/bookings/alignersfit-invisalign"
           className="rv-button rv-button-secondary mt-10">
+            
+            
           <div className="rv-button-top !w-full !text-center">
             <span className="!font-normal"> Order Now</span>
           </div>
           <div className="rv-button-bottom !w-full !text-center">
-            <span className="!font-normal"> Get Started</span>
+            <span className="!font-normal"> Order Now</span>
           </div>
         </Link>
       </div>

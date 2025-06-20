@@ -27,18 +27,7 @@ const BlogPage = () => {
         description="Stay informed about clear aligners, orthodontic care, and smile transformations. Get expert insights, treatment tips, and success stories from AlignersFit's dental professionals."
       />
       <BlogPostV5 Blogs={loadedBlogs} />
-      <CTA>
-        Let's discuss
-        <CtaImageSlider
-          slides={[
-            { id: '1', img: '/images/aligners/smile1.jpg' },
-            { id: '2', img: '/images/aligners/smile2.jpg' },
-            { id: '3', img: '/images/aligners/smile3.jpg' },
-          ]}
-        />
-        your smile.
-        <i className="block font-instrument italic max-md:inline-block max-sm:pl-2 sm:mt-10">Book a free consultation?</i>
-      </CTA>
+      
     </LayoutOne>
   )
 }

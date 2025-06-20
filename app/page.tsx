@@ -80,6 +80,7 @@ import BlogPostV7 from '@/components/homepage-12/BlogPostV7'
 import Customer from '@/components/homepage-06/Customer'
 import OurWork from '@/components/homepage-07/OurWork'
 import {  getHomePageData } from '@/actions/queries'
+import Loader from '@/components/homepage-06/Loader'
  
 export const generateMetadata = async () => {
   const data = await getHomePageData()
@@ -116,11 +117,12 @@ const HomePage = async () => {
       <WhyAligner /> */}
      
       {/* <BlogPostsV3 /> */}
-      <section className='relative'>
+      <Loader acf={data.acf}/>
+      {/* <section className='relative'>
 
 
        <HeroSection data={data.acf.main_heading} />
-      </section>
+      </section> */}
     
       {/*
      

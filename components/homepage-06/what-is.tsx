@@ -81,7 +81,7 @@ export default function WhatIsAlignersFit(props:Props) {
       <p className="md:leading-30 what-is-alignersfit-text text-4xl font-semibold md:text-6xl lg:text-8xl">
         What is <span className="orange-gradient-text ">AlignersFit?</span>
       </p>
-      <div className="mt-8 grid grid-cols-1 gap-8 lg:grid-cols-4 lg:gap-4">
+      <div className="mt-8 grid grid-cols-1 gap-8 lg:grid-cols-4 lg:gap-4 z-10">
         <div className="order-2 grid grid-cols-1 gap-4 lg:order-1 lg:col-span-2">
           <p className="text-md orange-gradient-text about-section -mb-4 font-semibold">About Us</p>
           <p className="about-section text-2xl font-semibold md:text-3xl lg:text-4xl">
@@ -100,7 +100,7 @@ export default function WhatIsAlignersFit(props:Props) {
           </div>
         </div>
 
-        <div className=" order-1 lg:order-2 lg:col-span-2 lg:translate-x-10">
+        <div className=" order-1 -z-10 lg:order-2 lg:col-span-2 lg:translate-x-10">
           <LazyLoadVideo
             src="/video/aligner-process.mp4"
             className="video-animation  md:scale-125"

@@ -69,7 +69,7 @@ const PricingCard = ({ showHeader = false,packages }: PricingProps) => {
                   <span className="rv-badge-text">Pricing</span>
                 </div>
                 <TextAppearAnimation>
-                  <h2 className="text-appear mx-auto mb-5 max-w-3xl md:mb-8">Simple pricing for your smile.</h2>
+                  <h2 className="text-appear mx-auto mb-5 max-w-3xl md:mb-8 font-bold text-gray-700">Simple pricing for your smile.</h2>
                 </TextAppearAnimation>
               </div>
             )}
@@ -217,8 +217,8 @@ const PricingCard = ({ showHeader = false,packages }: PricingProps) => {
                   </div>
                 )}
 
-                <Link href="/product/in-clinic-package-one" className="rv-button rv-button-white !w-full">
-                  <div className="rv-button-top !w-full !text-center">
+                <Link href="/product/in-clinic-package-one" className="rv-button rv-button-secondary !w-full">
+                  <div className="rv-button-top  !w-full !text-center">
                     <span className="!font-normal"> Order Now</span>
                   </div>
                   <div className="rv-button-bottom !w-full !text-center">

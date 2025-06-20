@@ -174,7 +174,24 @@ export default function Navbar() {
           }
         },
       })
-      const tl = gsap.timeline()
+      const tl = gsap.timeline(
+        {
+          delay:4
+        }
+      )
+
+      tl.fromTo('.logo-img',{ 
+        opacity:0,
+        y: -10,
+      },
+      {
+        opacity: 1,
+        y: 0,
+        duration: 1,
+        ease: 'power2.inOut',
+        stagger: 0.2,
+      },
+    )
       tl.fromTo(
         '.menu-item',
         {
@@ -345,7 +362,7 @@ export default function Navbar() {
         <nav
           className={`fixed z-[1000] w-full px-5 pt-1 transition duration-300 ease-linear will-change-transform sm:px-8 sm:pt-5 ${isVisible ? 'translate-y-0' : '-translate-y-full'}`}>
           <div className="flex justify-between">
-            <Link href="/" className="relative z-10">
+            <Link href="/" className="relative z-10 logo-img">
               <Image
                 className="inline-block max-h-[68px] w-auto dark:hidden"
                 src={logo}

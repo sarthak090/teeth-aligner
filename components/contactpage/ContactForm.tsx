@@ -25,7 +25,11 @@ const ContactForm = () => {
   }
 
   return (
-    <section className="pb-14 md:pb-16 lg:pb-[88px] xl:pb-[100px]">
+    <section className="pb-14 md:pb-16 lg:pb-[88px] xl:pb-[100px] relative p-4">
+                <div className="line_line line-top" />
+                <div className="line_line line-bottom" />
+                <div className="line_line line-left" />
+                <div className="line_line line-right" />
       <div className="container">
         <RevealWrapper
           as="form"
@@ -196,14 +200,19 @@ const ContactForm = () => {
           </div>
 
           <div className="col-span-full sm:mt-14 md:mx-auto">
-            <button type="submit" className="rv-button rv-button-primary block w-full md:inline-block md:w-auto">
+            {/* <button type="submit" className="rv-button rv-button-primary block w-full md:inline-block md:w-auto">
               <div className="rv-button-top">
                 <span>Request Consultation</span>
               </div>
               <div className="rv-button-bottom">
                 <span className="text-nowrap">Request Consultation</span>
               </div>
-            </button>
+            </button> */}
+
+              <button type="submit" className="dsn-button" style={{cursor:"pointer"}}>
+                                    <span className="dsn-border border-color-default" />
+                                    <span className="text-button">Send Message</span>
+                                </button>
           </div>
         </RevealWrapper>
       </div>

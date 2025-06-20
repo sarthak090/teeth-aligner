@@ -51,13 +51,13 @@ type Props ={
 function renderIcon(title: string) {
   switch (title) {
     case 'Submit Form':
-      return <DentalForm />
+      return <DentalForm className='w-20 h-20'/>
     case 'Set Appointment':
-      return <DetnalAppointment />
+      return <DetnalAppointment className='w-20 h-20' />
     case 'Get 3d Scanned':
-      return <DentalReport />
+      return <DentalReport className='w-20 h-20' />
     case 'Receive Aligner':
-      return <DentalBadge />
+      return <DentalBadge className='w-20 h-20' />
   }
 }
 const ProcessV8 = (props:Props) => {
@@ -73,7 +73,7 @@ const ProcessV8 = (props:Props) => {
           </RevealWrapper>
           <TextAppearAnimation>
             <h2 className="text-appear mb-3">
-            Get started in these <i className="font-instrument"> simple steps </i> 
+            Get started in these  simple steps  
 
 
              </h2>
@@ -85,19 +85,20 @@ const ProcessV8 = (props:Props) => {
         <div className="flex justify-center gap-[30px] max-xl:flex-wrap">
           {data.map((item:{heading:string,description:string},index) => (
             <RevealWrapper key={index} className="reveal-me w-full grow pt-6 sm:w-[48%] xl:grow">
-              <div className="relative mx-auto grid min-h-[300px] grid-cols-1 content-between border px-5 pb-[42px] pt-10 text-center dark:border-dark">
+              <div className="relative mx-auto grid min-h-[300px] grid-cols-1 gap-4 border px-5 pb-[42px] pt-10 text-center dark:border-dark">
                 <div className="absolute -top-4 left-1/2 inline-flex -translate-x-1/2 items-center justify-center rounded-[72px] bg-primary px-4 pb-2 pt-2.5 dark:bg-backgroundBody">
                   <span className="text-xs uppercase leading-[1.2] tracking-[0.96px] text-backgroundBody dark:text-secondary">
                     Step 0{index+1}
                   </span>
                 </div>
              
-                <h6 className="text-2xl font-normal leading-[1.1] text-black dark:text-white">{item.heading}</h6>
+             
                 <div className='h-full w-full flex justify-center items-center item-icon'>
                 <span className='text-primary w-16 h-16'>
                    {renderIcon(item.heading)}
                 </span>
                 </div>
+                <h6 className="text-xl font-semibold  leading-[1.1] text-primary dark:text-white">{item.heading}</h6>
                 <p className="text-base font-normal leading-[1.3] text-black/70 dark:text-backgroundBody/70">
                   {item.description}
                 </p>

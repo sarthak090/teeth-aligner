@@ -100,7 +100,7 @@ const TestimonialV9 = ({testimonials}: Props) => {
               <h2 className="text-appear-2">
               Transforming smiles
               with 
-                <span className="font-instrument italic">AlignersFit </span>
+                AlignersFit 
               </h2>
             </TextAppearAnimation02>
           </div>

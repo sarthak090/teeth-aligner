@@ -46,7 +46,7 @@ const FAQ = ({ bigTitleWithBadge = false, data }: FaqProps) => {
         ) : (
           <TextAppearAnimation>
             <h2 className="text-appear mb-10 text-center md:mb-20">
-              Frequently Asked <i className="font-instrument italic">Questions</i>
+              Frequently Asked Questions
             </h2>
           </TextAppearAnimation>
         )}

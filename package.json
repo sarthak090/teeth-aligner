@@ -8,8 +8,8 @@
     "start": "next start",
     "lint": "eslint app --ext ts,tsx,js,jsx,cjs --report-unused-disable-directives --max-warnings 0",
     "lint:fix": "eslint app --ext js,jsx,ts,tsx,cjs --fix",
-    "format": "prettier --write 'app/**/*.{js,jsx,ts,tsx,css,html}' './**/*.{js,jsx,ts,tsx,css,html}'",
-    "generate-sitemap": "ts-node scripts/generate-sitemap.ts"
+    "format": "prettier --write 'app/**/*.{js,jsx,ts,tsx,css,html}' './**/*.{js,jsx,ts,tsx,css,html}'"
+     
   },
   "dependencies": {
     "@gsap/react": "^2.1.1",
@@ -20,6 +20,7 @@
     "@types/matter-js": "^0.19.8",
     "@types/three": "^0.176.0",
     "clsx": "^2.1.1",
+    "fs": "^0.0.1-security",
     "github-slugger": "^2.0.0",
     "gray-matter": "^4.0.3",
     "gsap": "^3.12.5",
@@ -58,6 +59,7 @@
     "prettier-plugin-css-order": "^2.1.2",
     "prettier-plugin-tailwindcss": "^0.6.9",
     "tailwindcss": "^3.4.1",
+    "ts-node": "^10.9.2",
     "typescript": "^5"
   }
 }

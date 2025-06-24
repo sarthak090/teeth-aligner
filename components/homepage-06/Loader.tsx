@@ -136,7 +136,7 @@ export default function Loader({acf}:{acf:any}) {
 
   return (
     <>
-      <div className="hero" ref={container}>
+      <div className="hero pt-12" ref={container}>
         
         <div className="progress-bar   bg-primary">
           <p className="uppercase">loading</p>

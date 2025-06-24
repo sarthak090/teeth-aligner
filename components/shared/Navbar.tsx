@@ -174,9 +174,11 @@ export default function Navbar() {
           }
         },
       })
+
+      console.log({pathname})
       const tl = gsap.timeline(
         {
-          delay:4
+          delay: pathname == '/'?  4:1
         }
       )
 

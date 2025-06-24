@@ -1,0 +1,15 @@
+# 3ds Max Wavefront OBJ Exporter v0.97b - (c)2007 guruware
+# File Created: 21.06.2016 17:22:54
+
+newmtl Plastic
+	Ns 10.000000
+	Ni 1.500000
+	d 0.400000
+	Tr 0.600000
+	Tf 0.400000 0.400000 0.400000 
+	illum 2
+	Ka 0.349020 0.349020 0.349020
+	Kd 0.349020 0.349020 0.349020
+	Ks 0.000000 0.000000 0.000000
+	Ke 0.000000 0.000000 0.000000
+	map_bump -bm 0.300000 Map__4_Normal_Bump.png

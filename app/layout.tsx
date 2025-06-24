@@ -6,6 +6,7 @@ import { ThemeModeProvider } from '@/utils/Providers'
 import type { Metadata } from 'next'
 import { ReactNode, Suspense } from 'react'
 import '../scss/main.scss'
+import ViewCanvas from '@/components/ObjViewer/ViewCanvas'
 
 export const metadata: Metadata = {
   title: 'AlignersFit',
@@ -25,6 +26,7 @@ export default function RootLayout({
               {/* <ThemeSwitcher /> */}
               <CursorPointer />
               {children}
+              {/* <ViewCanvas/> */}
             </ThemeModeProvider>
           </SmoothScrollProvider>
         </Suspense>

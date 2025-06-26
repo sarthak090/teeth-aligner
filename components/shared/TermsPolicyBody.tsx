@@ -5,10 +5,12 @@ import rehypeSlug from 'rehype-slug'
 import RevealWrapper from '../animation/RevealWrapper'
 
 interface PropsTypes {
-  termsData: TermsDataType[]
+  termsData: string;
   heading?: boolean
+  headingContent?:string;
 }
-const TermsPolicyBody: FC<PropsTypes> = ({ termsData, heading = false }) => {
+const TermsPolicyBody: FC<PropsTypes> = ({ termsData, heading = false,headingContent }) => {
+ 
   return (
     <section className="relative overflow-hidden pb-14 md:pb-16 lg:pb-[88px] xl:pb-[100px]">
       <div className="container">
@@ -22,20 +24,16 @@ const TermsPolicyBody: FC<PropsTypes> = ({ termsData, heading = false }) => {
           </RevealWrapper>
         ) : (
           <RevealWrapper>
-            <h2 className="mb-5 text-[25px] md:mb-10 md:text-4xl md:leading-[1.5]">
-              Your privacy is important to us. This Privacy Policy explains how we collect, use, disclose, and safeguard
-              your information when you use our services. Please read this policy carefully to understand our practices
-              regarding your personal data.
-            </h2>
+            {headingContent?.length  &&            <h2 className="mb-5 text-[25px] md:mb-10 md:text-4xl md:leading-[1.5] "dangerouslySetInnerHTML={{__html:headingContent}}  />
+          }
+             
+           
           </RevealWrapper>
         )}
 
         <div className="blog-details-body">
-          {termsData.map((terms) => (
-            <RevealWrapper key={terms.slug}>
-              <ReactMarkdown rehypePlugins={[[rehypeSlug]]}>{terms.content}</ReactMarkdown>
-            </RevealWrapper>
-          ))}
+          <div dangerouslySetInnerHTML={{__html:termsData}}/>
+         
         </div>
       </div>
     </section>

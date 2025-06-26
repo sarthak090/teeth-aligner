@@ -5,7 +5,7 @@ import CtaImageSlider from '@/components/shared/CtaImageSlider'
 import FAQ from '@/components/shared/FAQ'
 import LayoutOne from '@/components/shared/LayoutOne'
 import PageHero from '@/components/shared/PageHero'
-import { getGlobalData } from '@/actions/queries'
+import { getGlobalData, getPageDataById } from '@/actions/queries'
 
 export const metadata = {
   title: 'Pricing',
@@ -13,6 +13,8 @@ export const metadata = {
 
 const PricingPage = async () => {
   const data = await getGlobalData()
+  const pricingData = await getPageDataById('309')
+  const faqs = pricingData.acf.faqs
 
   return (
     <LayoutOne>
@@ -20,7 +22,7 @@ const PricingPage = async () => {
     
     <div className='container' >
       <PricingCard packages={data.packages} />
-       <FAQ data={data.faqs} />
+       <FAQ data={faqs} />
     </div>
     </LayoutOne>
   )

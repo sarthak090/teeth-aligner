@@ -113,13 +113,13 @@ const Customer  = ({data} :{data: Data[]}) => {
           }}>
           {data.map((item,index) => (
             <SwiperSlide key={index}>
-              <div className="group relative h-auto border p-1 max-w-[600px]">
+              <div className="group relative h-auto border p-1 max-w-[620px]">
                  
                   <figure className="overflow-hidden">
                     <img
                       src={item?.image}
                       alt={item?.condition}
-                      className="block h-[380px]   object-cover transition-all duration-500 group-hover:rotate-3 group-hover:scale-125"
+                      className="block h-[390px]   object-contain transition-all duration-500 group-hover:rotate-3  group-hover:scale-125"
                     />
                   </figure>
                   <div className="absolute bottom-7 left-7">

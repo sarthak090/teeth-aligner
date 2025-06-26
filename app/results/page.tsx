@@ -1,5 +1,5 @@
  
-import HeroSection from '@/components/homepage-06/hero-section'
+import HeroSection from '@/components/results/HeroBg'
  
 import LayoutOne from '@/components/shared/LayoutOne'
 import FAQ from '@/components/shared/FAQ'
@@ -24,11 +24,14 @@ const HomePage = async () => {
        <HeroSection />
       </section>
     
-      
-      <OurWork />
+    <div id="results">
+    <OurWork />
 
-      <PricingCard showHeader={true} packages={data.packages} />
-     
+<PricingCard showHeader={true} packages={data.packages} />
+
+
+    </div>
+      
      
     
       <TestimonialV9 testimonials={testimonials} />

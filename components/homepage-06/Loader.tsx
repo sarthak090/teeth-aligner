@@ -160,44 +160,7 @@ export default function Loader({acf}:{acf:any}) {
         
       </div>
 
-      <div className="logo !text-primary">
-        <div className="char ">
-          <h1 className="!text-primary">A</h1>
-        </div>
-        <div className="char anim-out">
-          <h1 className="!text-primary">l</h1>
-        </div>
-        <div className="char anim-out">
-          <h1 className="!text-primary">i</h1>
-        </div>
-        <div className="char anim-out">
-          <h1 className="!text-primary">g</h1>
-        </div>
-        <div className="char anim-out">
-          <h1 className="!text-primary">n</h1>
-        </div>
-        <div className="char anim-out">
-          <h1 className="!text-primary">e</h1>
-        </div>
-        <div className="char anim-out">
-          <h1 className="!text-primary">r</h1>
-        </div>
-        <div className="char anim-out">
-          <h1 className="!text-primary">s</h1>
-        </div>
-        <div className="char anim-out">
-          <h1 className="!text-primary">f</h1>
-        </div>
-        <div className="char anim-out">
-          <h1 className="!text-primary">i</h1>
-        </div>
-        <div className="char anim-out">
-          <h1 className="!text-primary">t</h1>
-        </div>
-        <div className="char anim-out">
-          <h1 className="!text-primary">.</h1>
-        </div>
-      </div>
+       
     </>
   );
 }

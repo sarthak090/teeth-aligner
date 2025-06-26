@@ -395,9 +395,7 @@ export default function Navbar() {
                       </div>
                     </Link>
                   ))}
-                  <div className="menu-item -translate-y-4">
-                    <CartIcon />
-                  </div>
+                  
                 </ul>
               </div>
 

@@ -129,7 +129,11 @@ const HomePage = async () => {
       <WhatIsAlignersFit />
      
    */}
-      <PricingCard showHeader={true} packages={globalData.packages} />
+    {
+      globalData.packages && <PricingCard showHeader={true} packages={globalData.packages} />
+
+    }
+      
      
       <ProcessV8 data={data.acf.process} /> 
       {/* <Process /> */}

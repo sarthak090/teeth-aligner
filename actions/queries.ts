@@ -27,3 +27,9 @@ export const getInclinicPackageData = async () => {
     const data = await res.json()
     return data
 }
+
+export const getPageDataById = async (id:string)=>{
+    const res = await fetch(`${process.env.NEXT_PUBLIC_CMS_URL}/pages/${id}?acf_format=standard`)
+    const data = await res.json()
+    return data
+}

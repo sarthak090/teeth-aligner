@@ -175,7 +175,7 @@ export default function Navbar() {
         },
       })
 
-      console.log({pathname})
+    
       const tl = gsap.timeline(
         {
           delay: pathname == '/'?  4:1
@@ -305,7 +305,7 @@ export default function Navbar() {
   return (
     <>
       <header ref={headerRef} className="fixed z-[9999] w-full transition-transform duration-300">
-        <div
+        {/* <div
           className={`pointer-events-none fixed top-0 z-[21] h-[155px] w-full transition duration-300 ease-linear will-change-transform ${isVisible ? 'translate-y-0' : '-translate-y-full'}`}>
           <div
             className="pointer-events-none absolute inset-0"
@@ -360,7 +360,7 @@ export default function Navbar() {
               backdropFilter: 'blur(16px)',
               WebkitBackdropFilter: 'blur(16px)',
             }}></div>
-        </div>
+        </div> */}
         <nav
           className={`fixed z-[1000] w-full px-5 pt-1 transition duration-300 ease-linear will-change-transform sm:px-8 sm:pt-5 ${isVisible ? 'translate-y-0' : '-translate-y-full'}`}>
           <div className="flex justify-between">

@@ -20,7 +20,7 @@ export default function HeroSection({ data }: { data?: Data }) {
   const breakText = data?.normal_text?.split(' ')
 
   return (
-    <div className="hero-section px-4 md:px-16" ref={heroSectionRef}>
+    <div className="hero-section px-4 md:px-16 flex items-center md:min-h-[900px]" ref={heroSectionRef}>
       <HeroBgVideo />
       <div className="z-[10] flex h-screen flex-col items-center justify-center md:items-start ">
         <div className="left-[-180px] top-[180px] -z-10 hidden h-[600px] w-[600px] rounded-full bg-gradient-to-br from-[#005BD1] via-[#FFCB90] to-[#FF0004] opacity-50 blur-3xl md:absolute md:block"></div>

@@ -20,13 +20,16 @@ export default function HeroSection({ data }: { data?: Data }) {
   const breakText = data?.normal_text?.split(' ')
 
   return (
-    <div className="hero-section px-4 md:px-16 flex items-center md:min-h-[900px]" ref={heroSectionRef}>
+    <div className="hero-section relative  px-4 md:px-16 flex items-center md:min-h-[900px]" ref={heroSectionRef}>
+      <div className=''>
       <HeroBgVideo />
+      </div>
+      
       <div className="z-[10] flex h-screen flex-col items-center justify-center md:items-start ">
         <div className="left-[-180px] top-[180px] -z-10 hidden h-[600px] w-[600px] rounded-full bg-gradient-to-br from-[#005BD1] via-[#FFCB90] to-[#FF0004] opacity-50 blur-3xl md:absolute md:block"></div>
         <div className="right-[-180px] top-[100px] -z-10 hidden h-[600px] w-[600px] rounded-full bg-gradient-to-br from-[#005BD1] via-[#FFCB90] to-[#FF0004] opacity-50 blur-3xl md:absolute md:block"></div>
 
-        <h1 className="z-10 mt-72 md:mt-0 text-center text-[3.2rem] font-semibold text-gray-700 md:text-left md:text-8xl">
+        <h1 className="z-10 mt-72 md:mt-0 text-center text-[3.2rem] font-semibold pointer-events-none text-gray-700 md:text-left md:text-8xl">
           <RevealWrapper>
             <span className="text-gray-700">
               {' '}

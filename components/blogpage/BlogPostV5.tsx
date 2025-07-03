@@ -7,6 +7,7 @@ import Link from 'next/link'
 import { FC, useState } from 'react'
 import RevealWrapper from '../animation/RevealWrapper'
 import Pagination from './Pagination'
+import { formatDateToMonthName } from '@/utils/date-format'
 
 interface BlogsProps {
   Blogs: BlogType[]
@@ -49,19 +50,19 @@ const BlogPostV5: FC<BlogsProps> = ({ Blogs }) => {
                   <Image
                     width={360}
                     height={388}
-                    src={blog.thumbnail}
+                    src={blog.featured_image_url}
                     className="h-full w-full object-cover transition-all duration-500 group-hover:rotate-3 group-hover:scale-125"
                     alt="Blog Images"
                   />
                 </figure>
               </Link>
               <p className="font-poppins mb-5 mt-[30px] text-sm font-normal uppercase leading-[1.1] tracking-[1.12px]">
-                {blog.date}
+                {formatDateToMonthName(blog.date)}
               </p>
               <Link href={`/blog/${blog.slug}`}>
                 <div className="blog-title mb-9">
                   <h3 className="text[25px] md:text-3xl lg:text-4xl lg:leading-[1.2] lg:tracking-[-0.72px]">
-                    {blog.title} 
+                    {blog.title.rendered} 
                   </h3>
                 </div>
               </Link>
@@ -84,7 +85,7 @@ const BlogPostV5: FC<BlogsProps> = ({ Blogs }) => {
         </RevealWrapper>
 
         <article className="mt-12 md:mt-[70px] [&>*:not(last-child)]:mb-10">
-          {currentPageData?.slice(3)?.map((blog) => (
+          {currentPageData?.slice(3,currentPageData.length)?.map((blog) => (
             <RevealWrapper
               key={blog.slug}
               className="underline-hover-effect group flex flex-col-reverse items-center justify-center gap-x-6 gap-y-10 border dark:border-dark md:justify-normal lg:flex-row lg:p-10">
@@ -114,7 +115,7 @@ const BlogPostV5: FC<BlogsProps> = ({ Blogs }) => {
               <Link href={`/blog/${blog.slug}`} className="max-lg:w-full">
                 <figure className="h-96 w-full overflow-hidden lg:h-[190px] lg:w-[464px] lg:flex-1">
                   <Image
-                    src={blog.thumbnail}
+                    src={blog.featured_image_url}
                     width={464}
                     height={190}
                     className="h-full w-full object-cover transition-all duration-500 group-hover:rotate-3 group-hover:scale-125"

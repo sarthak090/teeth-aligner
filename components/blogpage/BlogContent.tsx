@@ -1,4 +1,5 @@
 import getMarkDownData from '@/utils/GetMarkDownData'
+import { generateH3TableOfContentsTitles } from '@/utils/tableOfContents'
 import Image from 'next/image'
 import Link from 'next/link'
 import ReactMarkdown from 'react-markdown'
@@ -14,17 +15,19 @@ interface RestOfTheBlogType {
 }
 
 const blogs: RestOfTheBlogType[] = getMarkDownData('data/teeth-aligners')
-const RestBlogData = blogs.slice(0, 3)
+// const RestBlogData = blogs.slice(0, 3)
 
 const BlogContent = ({ blog }: any) => {
-  const headings = blog.content.match(/### .+/g) ?? []
-  const tableOfContents = headings.map((heading: string) => heading.replace('### ', ''))
+  // Generate table of contents from the rendered HTML content
+  // Extract H3 headings as strings for the table of contents
+  const tableOfContents = generateH3TableOfContentsTitles(blog.content.rendered)
+
   return (
     <section className="pb-14 md:pb-16 lg:pb-[88px] xl:pb-[100px]">
       <div className="mx-auto max-w-[1440px] px-6 md:px-10 lg:px-20">
         <RevealWrapper as="figure" className="reveal-me w-full 2xl:max-h-[523px]">
           <Image
-            src={blog?.data?.thumbnail}
+            src={blog?.featured_image_url}
             width={1280}
             height={523}
             alt="Blog Details"
@@ -140,13 +143,13 @@ const BlogContent = ({ blog }: any) => {
             </div>
           </aside>
           <article className="career-details-body overflow-hidden">
-            <ReactMarkdown rehypePlugins={[[rehypeSlug]]}>{blog.content}</ReactMarkdown>
+            <div dangerouslySetInnerHTML={{ __html: blog.content.rendered }} />
           </article>
         </div>
       </div>
-      <div className="container overflow-hidden pt-14 md:pt-16 lg:pt-[88px] xl:pt-[100px]">
+      {/* <div className="container overflow-hidden pt-14 md:pt-16 lg:pt-[88px] xl:pt-[100px]">
         <BlogList blogData={RestBlogData} />
-      </div>
+      </div> */}
     </section>
   )
 }

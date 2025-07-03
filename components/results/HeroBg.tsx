@@ -68,7 +68,7 @@ export default function HeroBg() {
             </RevealWrapper>
           </h1>
 
-          <Link
+          {/* <Link
             ref={buttonRef}
             href="#results"
             className="rv-button rv-button-secondary mt-10"
@@ -79,7 +79,7 @@ export default function HeroBg() {
             <div className="rv-button-bottom !w-full !text-center">
               <span className="!font-normal">See Results</span>
             </div>
-          </Link>
+          </Link> */}
         </div>
       </div>
     </div>

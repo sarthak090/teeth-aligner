@@ -7,6 +7,7 @@ import Image from 'next/image'
 import Link from 'next/link'
 import { usePathname } from 'next/navigation'
 import { useCallback, useEffect, useLayoutEffect, useRef, useState } from 'react'
+import { useRouter } from 'next/navigation'
 
 import { SocialIcons } from '@/components/navbarCompo/social-icons'
 import { MenuList } from '../navbarCompo/menu-list'
@@ -20,42 +21,13 @@ interface MenuItemProps {
   isActive?: boolean
 }
 
-const menuItems: MenuItemProps[] = [
-  {
-    title: 'How it works',
-    url: '/#how-it-works',
-  },
-  {
-    title: 'Results',
-    url: '/results',
-  },
-  {
-    title: 'Pricing',
-    url: '/pricing',
-  },
-  // {
-  //   title: 'Shop',
-  //   url: '/shop',
-  // },
-  {
-    title: 'FAQ',
-    url: '/faq',
-  },
-  
 
-  {
-    title: 'Blog',
-    url: '/blog',
-  },
-  {
-    title: 'Contact',
-    url: '/contact',
-  },
-]
 export default function Navbar() {
   const pathname = usePathname()
+  const router = useRouter()
   const [isVisible, setIsVisible] = useState(true)
   const lastScrollY = useRef(0)
+  const [shouldScrollToHowItWorks, setShouldScrollToHowItWorks] = useState(false)
 
   const menuRef = useRef<HTMLElement>(null)
   const menuOverflowRef = useRef<HTMLDivElement>(null)
@@ -67,7 +39,38 @@ export default function Navbar() {
   const isMenuOpenRef = useRef(false)
   const headerRef = useRef<HTMLElement>(null)
   const menuItemsListRef = useRef<HTMLUListElement>(null)
-
+  const menuItems: MenuItemProps[] = [
+    {
+      title: 'How it works',
+      url: pathname !== '/' ? '/#how-it-works' : '/',
+    },
+    {
+      title: 'Results',
+      url: '/results',
+    },
+    {
+      title: 'Pricing',
+      url: '/pricing',
+    },
+    // {
+    //   title: 'Shop',
+    //   url: '/shop',
+    // },
+    {
+      title: 'FAQ',
+      url: '/faq',
+    },
+    
+  
+    {
+      title: 'Blog',
+      url: '/blog',
+    },
+    {
+      title: 'Contact',
+      url: '/contact',
+    },
+  ]
   useLayoutEffect(() => {
     if (menuRef.current) {
       menuRef.current.style.visibility = 'hidden'
@@ -286,6 +289,22 @@ export default function Navbar() {
     }
   }, [pathname, closeMenu])
 
+  // Handle scrolling to how-it-works section after navigation
+  useEffect(() => {
+    if (shouldScrollToHowItWorks && pathname === '/') {
+      // Reset the flag first
+      setShouldScrollToHowItWorks(false)
+      
+      // Wait for the page to be fully rendered
+      setTimeout(() => {
+        const element = document.getElementById('how-it-works')
+        if (element) {
+          element.scrollIntoView({ behavior: 'smooth' })
+        }
+      }, 1000) // Increased delay to ensure page is fully loaded
+    }
+  }, [shouldScrollToHowItWorks, pathname])
+
   useEffect(() => {
     const controlNavbar = () => {
       if (window.scrollY > lastScrollY.current && window.scrollY > 200) {
@@ -302,6 +321,8 @@ export default function Navbar() {
     return () => window.removeEventListener('scroll', controlNavbar)
   }, [])
 
+
+  const isHomePage = pathname === '/'
   return (
     <>
       <header ref={headerRef} className="fixed z-[9999] w-full transition-transform duration-300">
@@ -362,7 +383,7 @@ export default function Navbar() {
             }}></div>
         </div> */}
         <nav
-          className={`fixed z-[1000] w-full px-5 pt-1 transition duration-300 ease-linear will-change-transform sm:px-8 sm:pt-5 ${isVisible ? 'translate-y-0' : '-translate-y-full'}`}>
+          className={` z-[1000] w-full px-5 pt-1 transition duration-300 ease-linear will-change-transform sm:px-8 sm:pt-5 ${isVisible ? 'translate-y-0' : '-translate-y-full'}`}>
           <div className="flex justify-between">
             <Link href="/" className="relative z-10 logo-img">
               <Image
@@ -389,6 +410,14 @@ export default function Navbar() {
                     <Link
                       key={item.title}
                       href={item.url}
+                      onClick={(e) => {
+                        if (item.title === 'How it works') {
+                          e.preventDefault()
+                          // Set flag to scroll after navigation
+                          setShouldScrollToHowItWorks(true)
+                          router.push('/')
+                        }
+                      }}
                       className="blog-title text-md menu-item font-semibold text-slate-700">
                       <div className="blog-title underline-hover-effect mb-9 font-semibold">
                         <h3 className="text-[18px] leading-[1.2] -tracking-[1.08px]">{item.title}</h3>

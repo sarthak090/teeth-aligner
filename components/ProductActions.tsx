@@ -3,6 +3,7 @@
 import { useCartStore } from '@/store/cartStore'
 import { toast } from 'sonner'
 import RevealWrapper from '@/components/animation/RevealWrapper'
+import { useRouter } from 'next/navigation'
 
 interface ProductActionsProps {
   productId: string
@@ -11,6 +12,8 @@ interface ProductActionsProps {
 }
 
 export default function ProductActions({ productId, productName, price }: ProductActionsProps) {
+  const router = useRouter()
+
   const handleAddToCart = () => {
     try {
       useCartStore.getState().addItem({
@@ -20,6 +23,8 @@ export default function ProductActions({ productId, productName, price }: Produc
         quantity: 1,
       })
       toast.success('Item added to cart successfully!')
+      // Redirect to cart page after adding item
+      router.push('/cart')
     } catch (error) {
       toast.error('Failed to add item to cart')
     }
@@ -32,10 +37,10 @@ export default function ProductActions({ productId, productName, price }: Produc
         className="rv-button rv-button-secondary mt-10 w-full"
       >
         <div className="rv-button-top !w-full !text-center">
-          <span className="!font-normal">Add to Cart</span>
+          <span className="!font-normal">Order Now</span>
         </div>
         <div className="rv-button-bottom !w-full !text-center">
-          <span className="!font-normal">Add to Cart</span>
+          <span className="!font-normal">Order Now</span>
         </div>
       </button>
     </RevealWrapper>

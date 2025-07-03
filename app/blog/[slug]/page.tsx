@@ -6,10 +6,11 @@ import PageHero from '@/components/shared/PageHero'
 import getMarkDownContent from '@/utils/GetMarkDownContent'
 import getMarkDownData from '@/utils/GetMarkDownData'
 import { BlogType } from '../page'
-import { getBlogBySlug } from '@/actions/queries'
+import { getBlogBySlug, getBlogs   } from '@/actions/queries'
+import { notFound } from 'next/navigation'
 
 export async function generateStaticParams() {
-  const blogs: BlogType[] = getMarkDownData('data/teeth-aligners')
+  const blogs: BlogType[] =await getBlogs()
 
   return blogs.map((post) => ({
     slug: post.slug,
@@ -22,7 +23,14 @@ const BlogDetails = async ({ params }: { params: Promise<{ slug: string }> }) =>
   // const postBlog = blog.data
 
   const blog = await getBlogBySlug(slug)
+
+  if(blog.length === 0){
+    return notFound()
+  }
+
   const postBlog = blog[0]
+
+  
  
   return (
     <LayoutOne>

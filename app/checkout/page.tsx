@@ -15,7 +15,6 @@ const stripePromise = loadStripe(process.env.NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY!
 
 export default function CheckoutPage() {
   const { items, totalPrice, clearCart } = useCartStore()
-  const [clientSecret, setClientSecret] = useState<string>('')
   const [loading, setLoading] = useState(true)
   const router = useRouter()
 
@@ -26,31 +25,9 @@ export default function CheckoutPage() {
       return
     }
 
-    // Create payment intent
-    const createPaymentIntent = async () => {
-      try {
-        const response = await fetch('/api/create-payment-intent', {
-          method: 'POST',
-          headers: {
-            'Content-Type': 'application/json',
-          },
-          body: JSON.stringify({
-            items: items,
-            total: totalPrice(),
-          }),
-        })
-
-        const data = await response.json()
-        setClientSecret(data.clientSecret)
-      } catch (error) {
-        console.error('Error creating payment intent:', error)
-      } finally {
-        setLoading(false)
-      }
-    }
-
-    createPaymentIntent()
-  }, [items, totalPrice, router])
+    // Set loading to false after validation
+    setLoading(false)
+  }, [items, router])
 
   if (loading) {
     return (
@@ -73,15 +50,11 @@ export default function CheckoutPage() {
         <div className="grid gap-8 lg:grid-cols-2">
           <div>
             <h2 className="mb-6 text-2xl font-semibold">Payment Information</h2>
-            {clientSecret && (
-              <Elements stripe={stripePromise} options={{ clientSecret }}>
-                <CheckoutForm 
-                  items={items} 
-                  total={totalPrice()} 
-                  onSuccess={clearCart}
-                />
-              </Elements>
-            )}
+            <CheckoutForm 
+              items={items} 
+              total={totalPrice()} 
+              onSuccess={clearCart}
+            />
           </div>
           
           <div>

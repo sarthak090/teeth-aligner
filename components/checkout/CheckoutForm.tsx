@@ -1,21 +1,27 @@
 'use client'
 
-import { useState } from 'react'
-import { useStripe, useElements, PaymentElement } from '@stripe/react-stripe-js'
+import { useState, useEffect } from 'react'
+import { useStripe, useElements, PaymentElement, Elements } from '@stripe/react-stripe-js'
+import { loadStripe } from '@stripe/stripe-js'
 import { toast } from 'sonner'
 import { useRouter } from 'next/navigation'
 import { CartItem } from '@/store/cartStore'
+
+// Initialize Stripe
+const stripePromise = loadStripe(process.env.NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY!)
 
 interface CheckoutFormProps {
   items: CartItem[]
   total: number
   onSuccess: () => void
+  paymentIntentId?: string
 }
 
-export default function CheckoutForm({ items, total, onSuccess }: CheckoutFormProps) {
+function CheckoutFormContent({ items, total, onSuccess, paymentIntentId }: CheckoutFormProps) {
   const stripe = useStripe()
   const elements = useElements()
   const [loading, setLoading] = useState(false)
+  const [orderId, setOrderId] = useState<number | null>(null)
   const [formData, setFormData] = useState({
     firstName: '',
     lastName: '',
@@ -23,9 +29,9 @@ export default function CheckoutForm({ items, total, onSuccess }: CheckoutFormPr
     phone: '',
     address: '',
     city: '',
-    state: '',
-    zipCode: '',
-    country: 'US'
+    province: '',
+    postalCode: '',
+    country: 'CA'
   })
   const router = useRouter()
 
@@ -35,6 +41,91 @@ export default function CheckoutForm({ items, total, onSuccess }: CheckoutFormPr
       ...prev,
       [name]: value
     }))
+  }
+
+  const updateWooCommerceOrder = async (orderId: number, status: string) => {
+    if (!orderId || orderId <= 0) {
+      console.error('Invalid order ID:', orderId)
+      return
+    }
+
+    try {
+      const response = await fetch(`/api/update-woocommerce-order/${orderId}`, {
+        method: 'PUT',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ 
+          orderId: orderId,
+          status: status 
+        })
+      })
+
+      if (!response.ok) {
+        const errorData = await response.json().catch(() => ({}))
+        throw new Error(errorData.error || `Failed to update order status: ${response.status}`)
+      }
+
+      return await response.json()
+    } catch (error) {
+      console.error('Error updating order status:', error)
+      throw error
+    }
+  }
+
+  const createWooCommerceOrder = async (): Promise<number> => {
+    const orderData = {
+      payment_method: 'stripe',
+      payment_method_title: 'Credit Card (Stripe)',
+      billing: {
+        first_name: formData.firstName,
+        last_name: formData.lastName,
+        address_1: formData.address,
+        city: formData.city,
+        state: formData.province,
+        postcode: formData.postalCode,
+        country: formData.country,
+        email: formData.email,
+        phone: formData.phone
+      },
+      shipping: {
+        first_name: formData.firstName,
+        last_name: formData.lastName,
+        address_1: formData.address,
+        city: formData.city,
+        state: formData.province,
+        postcode: formData.postalCode,
+        country: formData.country
+      },
+      line_items: items.map(item => ({
+        product_id: item.id,
+        quantity: item.quantity,
+        name: item.name,
+        price: item.price
+      })),
+      total: total.toString()
+    }
+
+    const response = await fetch('/api/create-woocommerce-order', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify(orderData),
+    })
+
+    if (!response.ok) {
+      const errorData = await response.json().catch(() => ({}))
+      throw new Error(errorData.error || `Failed to create order: ${response.status}`)
+    }
+
+    const result = await response.json()
+    
+    if (!result.success || !result.order || !result.order.id) {
+      throw new Error('Invalid response from order creation API')
+    }
+
+    return result.order.id
   }
 
   const handleSubmit = async (e: React.FormEvent) => {
@@ -53,7 +144,30 @@ export default function CheckoutForm({ items, total, onSuccess }: CheckoutFormPr
         return
       }
 
-      // Confirm payment
+      // Step 1: Create WooCommerce order first
+      const newOrderId = await createWooCommerceOrder()
+      setOrderId(newOrderId)
+      console.log(`Created WooCommerce order: ${newOrderId}`)
+
+      // Step 2: Update the existing payment intent with the order ID for webhook tracking
+      if (paymentIntentId) {
+        const updatePaymentIntentResponse = await fetch('/api/update-payment-intent', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify({
+            orderId: newOrderId,
+            paymentIntentId: paymentIntentId
+          }),
+        })
+
+        if (!updatePaymentIntentResponse.ok) {
+          console.warn('Failed to update payment intent metadata, but continuing with payment')
+        }
+      }
+
+      // Step 3: Confirm payment with existing payment intent
       const { error } = await stripe.confirmPayment({
         elements,
         confirmParams: {
@@ -66,8 +180,8 @@ export default function CheckoutForm({ items, total, onSuccess }: CheckoutFormPr
               address: {
                 line1: formData.address,
                 city: formData.city,
-                state: formData.state,
-                postal_code: formData.zipCode,
+                state: formData.province,
+                postal_code: formData.postalCode,
                 country: formData.country
               }
             }
@@ -76,66 +190,40 @@ export default function CheckoutForm({ items, total, onSuccess }: CheckoutFormPr
       })
 
       if (error) {
+        console.error('Stripe payment error:', error)
         toast.error(error.message || 'Payment failed')
+        
+        // Update order status to failed
+        try {
+          await updateWooCommerceOrder(newOrderId, 'failed')
+          console.log(`Order ${newOrderId} status updated to failed`)
+        } catch (updateError) {
+          console.error('Failed to update order status to failed:', updateError)
+          toast.error('Payment failed and order status could not be updated')
+        }
+        return
       } else {
-        // Payment successful - create order in WooCommerce
-        await createWooCommerceOrder()
+        // Payment successful - order will be updated via webhook
         onSuccess()
         toast.success('Payment successful!')
         router.push('/checkout/success')
       }
     } catch (error) {
       console.error('Payment error:', error)
+      
+      // If we have an order ID but something else failed, try to mark it as failed
+      if (orderId) {
+        try {
+          await updateWooCommerceOrder(orderId, 'failed')
+          console.log(`Order ${orderId} status updated to failed due to payment error`)
+        } catch (updateError) {
+          console.error('Failed to update order status to failed:', updateError)
+        }
+      }
+      
       toast.error('Payment failed. Please try again.')
     } finally {
       setLoading(false)
-    }
-  }
-
-  const createWooCommerceOrder = async () => {
-    try {
-      const orderData = {
-        payment_method: 'stripe',
-        payment_method_title: 'Credit Card (Stripe)',
-        set_paid: true,
-        billing: {
-          first_name: formData.firstName,
-          last_name: formData.lastName,
-          address_1: formData.address,
-          city: formData.city,
-          state: formData.state,
-          postcode: formData.zipCode,
-          country: formData.country,
-          email: formData.email,
-          phone: formData.phone
-        },
-        shipping: {
-          first_name: formData.firstName,
-          last_name: formData.lastName,
-          address_1: formData.address,
-          city: formData.city,
-          state: formData.state,
-          postcode: formData.zipCode,
-          country: formData.country
-        },
-        line_items: items.map(item => ({
-          product_id: item.id,
-          quantity: item.quantity,
-          name: item.name,
-          price: item.price
-        })),
-        total: total.toString()
-      }
-
-      await fetch('/api/create-woocommerce-order', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify(orderData),
-      })
-    } catch (error) {
-      console.error('Error creating WooCommerce order:', error)
     }
   }
 
@@ -248,37 +336,37 @@ export default function CheckoutForm({ items, total, onSuccess }: CheckoutFormPr
               value={formData.city}
               onChange={handleInputChange}
               className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-colors"
-              placeholder="City"
+              placeholder="Enter your city"
             />
           </div>
           
           <div className="space-y-2">
-            <label htmlFor="state" className="block text-sm font-medium text-gray-700">
-              State
+            <label htmlFor="province" className="block text-sm font-medium text-gray-700">
+              Province
             </label>
             <input
               type="text"
-              id="state"
-              name="state"
-              value={formData.state}
+              id="province"
+              name="province"
+              value={formData.province}
               onChange={handleInputChange}
               className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-colors"
-              placeholder="State"
+              placeholder="Enter your province"
             />
           </div>
           
           <div className="space-y-2">
-            <label htmlFor="zipCode" className="block text-sm font-medium text-gray-700">
-              ZIP Code
+            <label htmlFor="postalCode" className="block text-sm font-medium text-gray-700">
+              Postal Code
             </label>
             <input
               type="text"
-              id="zipCode"
-              name="zipCode"
-              value={formData.zipCode}
+              id="postalCode"
+              name="postalCode"
+              value={formData.postalCode}
               onChange={handleInputChange}
               className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-colors"
-              placeholder="ZIP Code"
+              placeholder="Enter your postal code"
             />
           </div>
         </div>
@@ -288,33 +376,82 @@ export default function CheckoutForm({ items, total, onSuccess }: CheckoutFormPr
       <div className="space-y-6">
         <div className="border-b border-gray-200 pb-4">
           <h3 className="text-xl font-semibold text-gray-900">Payment Information</h3>
-          <p className="text-sm text-gray-600 mt-1">Secure payment powered by Stripe</p>
+          <p className="text-sm text-gray-600 mt-1">Enter your payment details</p>
         </div>
-        <div className="border border-gray-300 rounded-lg p-4">
+        
+        <div className="space-y-4">
           <PaymentElement />
         </div>
       </div>
 
+      {/* Submit Button */}
       <div className="pt-6">
         <button
           type="submit"
-          disabled={!stripe || loading}
-          className="w-full bg-blue-600 text-white font-medium py-4 px-6 rounded-lg hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 disabled:bg-gray-400 disabled:cursor-not-allowed disabled:hover:bg-gray-400 transition-colors"
+          disabled={loading || !stripe || !elements}
+          className="w-full bg-blue-600 text-white py-4 px-6 rounded-lg font-semibold hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 disabled:opacity-50 disabled:cursor-not-allowed transition-colors"
         >
-          {loading ? (
-            <div className="flex items-center justify-center space-x-2">
-              <div className="w-4 h-4 border-2 border-white border-t-transparent rounded-full animate-spin"></div>
-              <span>Processing Payment...</span>
-            </div>
-          ) : (
-            `Complete Payment - $${total.toFixed(2)}`
-          )}
+          {loading ? 'Processing...' : `Pay $${(total).toFixed(2)}`}
         </button>
-        
-        <p className="text-xs text-gray-500 text-center mt-3">
-          Your payment information is encrypted and secure
-        </p>
       </div>
     </form>
+  )
+}
+
+export default function CheckoutForm(props: CheckoutFormProps) {
+  const [clientSecret, setClientSecret] = useState<string>('')
+  const [paymentIntentId, setPaymentIntentId] = useState<string>('')
+  const [loading, setLoading] = useState(false)
+
+  const createPaymentIntent = async () => {
+    setLoading(true)
+    try {
+      const response = await fetch('/api/create-payment-intent', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          items: props.items,
+          total: props.total,
+        }),
+      })
+
+      const data = await response.json()
+      setClientSecret(data.clientSecret)
+      setPaymentIntentId(data.paymentIntentId)
+    } catch (error) {
+      console.error('Error creating payment intent:', error)
+      toast.error('Failed to initialize payment form')
+    } finally {
+      setLoading(false)
+    }
+  }
+
+  // Create payment intent when component mounts
+  useEffect(() => {
+    createPaymentIntent()
+  }, [props.items, props.total])
+
+  if (loading) {
+    return (
+      <div className="flex items-center justify-center py-8">
+        <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-blue-600"></div>
+      </div>
+    )
+  }
+
+  if (!clientSecret) {
+    return (
+      <div className="text-center py-8">
+        <p className="text-red-600">Failed to load payment form. Please refresh the page.</p>
+      </div>
+    )
+  }
+
+  return (
+    <Elements stripe={stripePromise} options={{ clientSecret }}>
+      <CheckoutFormContent {...props} paymentIntentId={paymentIntentId} />
+    </Elements>
   )
 } 

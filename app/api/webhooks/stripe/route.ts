@@ -39,8 +39,36 @@ export async function POST(request: NextRequest) {
         const paymentIntent = event.data.object as Stripe.PaymentIntent
         console.log('Payment succeeded:', paymentIntent.id)
         
-        // Update WooCommerce order status if needed
-        // You can add logic here to update order status based on payment success
+        // Get order ID from metadata
+        const orderId = paymentIntent.metadata.orderId
+        
+        if (orderId) {
+          // Update WooCommerce order with payment information
+          try {
+            const response = await WooCommerce.put(`orders/${orderId}`, {
+              status: 'processing',
+              set_paid: true,
+              transaction_id: paymentIntent.id,
+              meta_data: [
+                {
+                  key: '_stripe_payment_intent_id',
+                  value: paymentIntent.id
+                },
+                {
+                  key: '_stripe_charge_id',
+                  value: typeof paymentIntent.latest_charge === 'string' ? paymentIntent.latest_charge : ''
+                },
+                {
+                  key: '_payment_method',
+                  value: 'stripe'
+                }
+              ]
+            })
+            console.log('Order updated successfully:', response.data.id)
+          } catch (error) {
+            console.error('Error updating WooCommerce order:', error)
+          }
+        }
         
         break
         
@@ -48,7 +76,38 @@ export async function POST(request: NextRequest) {
         const failedPayment = event.data.object as Stripe.PaymentIntent
         console.log('Payment failed:', failedPayment.id)
         
-        // Handle failed payment - maybe update order status to failed
+        // Get order ID from metadata
+        const failedOrderId = failedPayment.metadata.orderId
+        
+        if (failedOrderId) {
+          // Update WooCommerce order status to failed
+          try {
+            await WooCommerce.put(`orders/${failedOrderId}`, {
+              status: 'failed',
+              meta_data: [
+                {
+                  key: '_stripe_payment_intent_id',
+                  value: failedPayment.id
+                },
+                {
+                  key: '_payment_failed',
+                  value: 'true'
+                },
+                {
+                  key: '_payment_failed_reason',
+                  value: failedPayment.last_payment_error?.message || 'Payment failed'
+                },
+                {
+                  key: '_payment_failed_at',
+                  value: new Date().toISOString()
+                }
+              ]
+            })
+            console.log('Order marked as failed:', failedOrderId)
+          } catch (error) {
+            console.error('Error updating failed order:', error)
+          }
+        }
         
         break
         

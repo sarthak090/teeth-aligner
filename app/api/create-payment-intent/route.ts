@@ -11,7 +11,23 @@ const stripe = new Stripe(process.env.STRIPE_SECRET_KEY!, {
 
 export async function POST(request: NextRequest) {
   try {
-    const { items, total } = await request.json()
+    const { items, total, orderId } = await request.json()
+
+    // Validate required fields
+    if (!items || !total ) {
+      return NextResponse.json(
+        { error: 'Missing required fields: items, total, or orderId' },
+        { status: 400 }
+      )
+    }
+
+    // Validate orderId is a valid number
+    // if (typeof orderId !== 'number' || orderId <= 0) {
+    //   return NextResponse.json(
+    //     { error: 'Invalid orderId: must be a positive number' },
+    //     { status: 400 }
+    //   )
+    // }
 
     // Create a PaymentIntent with the order amount and currency
     const paymentIntent = await stripe.paymentIntents.create({
@@ -21,6 +37,7 @@ export async function POST(request: NextRequest) {
         enabled: true,
       },
       metadata: {
+        ...(orderId && { orderId: orderId.toString() }),
         items: JSON.stringify(items.map((item: any) => ({
           id: item.id,
           name: item.name,
@@ -32,6 +49,7 @@ export async function POST(request: NextRequest) {
 
     return NextResponse.json({
       clientSecret: paymentIntent.client_secret,
+      paymentIntentId: paymentIntent.id,
     })
   } catch (error) {
     console.error('Error creating payment intent:', error)

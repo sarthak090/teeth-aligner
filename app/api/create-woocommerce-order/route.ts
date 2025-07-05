@@ -12,16 +12,16 @@ export async function POST(request: NextRequest) {
   try {
     const orderData = await request.json()
 
-    // Create order in WooCommerce
+    // Create order in WooCommerce with pending status
     const response = await WooCommerce.post('orders', {
       payment_method: orderData.payment_method,
       payment_method_title: orderData.payment_method_title,
-      set_paid: orderData.set_paid,
+      set_paid: false, // Don't mark as paid initially
       billing: orderData.billing,
       shipping: orderData.shipping,
       line_items: orderData.line_items,
       total: orderData.total,
-      status: 'processing'
+      status: 'pending' // Start with pending status
     })
 
     return NextResponse.json({

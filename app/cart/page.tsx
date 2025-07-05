@@ -4,11 +4,12 @@ import LayoutOne from '@/components/shared/LayoutOne'
 import { useCartStore } from '@/store/cartStore'
 import Image from 'next/image'
 import Link from 'next/link'
+import { useRouter } from 'next/navigation'
 import { Toaster } from 'sonner'
 
 export default function CartPage() {
   const { items, removeItem, updateQuantity, totalPrice } = useCartStore()
-
+  const router = useRouter()
   if (items.length === 0) {
     return (
       <LayoutOne>
@@ -99,6 +100,7 @@ export default function CartPage() {
             <button
               onClick={() => {
                 // Handle checkout
+                router.push('/checkout')
               }}
               className="mt-6 w-full rounded-md bg-blue-600 px-6 py-3 text-white hover:bg-blue-700"
             >

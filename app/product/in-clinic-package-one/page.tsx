@@ -16,6 +16,7 @@ import { useCartStore } from '@/store/cartStore'
 import { toast } from 'sonner'
 import { Toaster } from 'sonner'
 import ProductActions from '@/components/ProductActions'
+import { getWooCommerceProductById } from '@/actions/woocommerce'
 
 
   // const SplineFullBox = dynamic(() => import('@/components/3d/SplineFullBox'), {
@@ -25,28 +26,28 @@ import ProductActions from '@/components/ProductActions'
 const Customer = dynamic(() => import('@/components/homepage-06/Customer'),  )
 const OurWork = dynamic(() => import('@/components/homepage-07/OurWork'),  )
 
-export const generateMetadata = async ({ params }: { params: { slug: string } }) => {
-  const product = await getInclinicPackageData()
-  const customData = product.custom_data
-  const seoData = customData.rank_math
-  return {
-    title: seoData.title,
-    description: seoData.description,
-    keywords: seoData.focus_keyword,
-    robots: seoData.robots,
-    canonical: seoData.canonical,
-    openGraph: {
-      title: seoData.title,
-      description: seoData.description,
-      images: [seoData.image],
-      url: seoData.canonical,
-      siteName: seoData.site_name,
-      locale: seoData.locale,
-      type: seoData.type,
-    }
+// export const generateMetadata = async ({ params }: { params: { slug: string } }) => {
+//   const product = await getInclinicPackageData()
+//   const customData = product.custom_data
+//   const seoData = customData.rank_math
+//   return {
+//     title: seoData.title,
+//     description: seoData.description,
+//     keywords: seoData.focus_keyword,
+//     robots: seoData.robots,
+//     canonical: seoData.canonical,
+//     openGraph: {
+//       title: seoData.title,
+//       description: seoData.description,
+//       images: [seoData.image],
+//       url: seoData.canonical,
+//       siteName: seoData.site_name,
+//       locale: seoData.locale,
+//       type: seoData.type,
+//     }
 
-  }
-}
+//   }
+// }
 function ProductDisplay() {
   return (
     <div className="relative h-[90%] w-full">
@@ -58,16 +59,20 @@ function ProductDisplay() {
 
 
 export default async function InClinicPackageOne() {
-  const product = await getInclinicPackageData()
-  const data = product.global_content
-  // console.log()
+  const productData = await getWooCommerceProductById(382)
+  if (!productData.success) {
+    return <div>Product not found</div>
+  }
+  const product = productData.product
+ const data = product.global_content
+  
 
   const handleAddToCart = () => {
     try {
       useCartStore.getState().addItem({
-        id: product.id,
-        name: product.acf.product_name,
-        price: product.acf.pricing,
+        id: product.id.toString(),
+        name: product.name,
+        price: product.price,
         quantity: 1,
       })
       toast.success('Item added to cart successfully!')
@@ -90,10 +95,10 @@ export default async function InClinicPackageOne() {
             {/* Right Side - Product Details */}
             <div className="space-y-8">
               <div>
-                <h1 className="mb-4 text-6xl font-bold text-gray-900">{product.acf.product_name}</h1>
+                <h1 className="mb-4 text-6xl font-bold text-gray-900">{product.name}</h1>
                 <p className="text-xl text-gray-600">Professional teeth alignment treatment with expert supervision</p>
               <div className="mt-6 flex gap-2 items-center">
-                <p className="text-4xl font-bold">${product.acf.pricing}</p>
+                <p className="text-4xl font-bold">${product.price}</p>
                 <p className="mt-2 text-sm text-gray-900">One-time payment or flexible financing available</p>
               </div>
               </div>

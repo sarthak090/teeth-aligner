@@ -45,3 +45,21 @@ export const getBlogBySlug = async (slug:string) => {
     const data = await res.json()
     return data
 }
+
+export const postContactForm = async (data:{
+    full_name:string
+    email:string;
+    phone_no:string;
+    message:string;
+
+}) => {
+    const res = await fetch(`${process.env.NEXT_PUBLIC_CMS_URL}/contacts`, {
+        method: 'POST',
+        body: JSON.stringify(data),
+        headers: {
+            'Content-Type': 'application/json'
+        }
+    })
+    const response = await res.json()
+    return response
+}

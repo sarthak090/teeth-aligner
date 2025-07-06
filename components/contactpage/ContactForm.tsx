@@ -1,27 +1,60 @@
 'use client'
 import React, { useState } from 'react'
 import RevealWrapper from '../animation/RevealWrapper'
+import { postContactForm } from '@/actions/queries'
+import { toast } from 'sonner'
 
 const ContactForm = () => {
   const [formData, setFormData] = useState({
     name: '',
     email: '',
     phone: '',
-    treatment: 'Clear Aligners',
-    timeline: '3-6 months',
+    // treatment: 'Clear Aligners',
+    // timeline: '3-6 months',
     message: '',
   })
+  const [isLoading, setIsLoading] = useState(false)
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement>) => {
     const { name, value } = e.target
     setFormData((prev) => ({ ...prev, [name]: value }))
   }
 
-  const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault()
-    console.log('Form Data Submitted:', formData)
-    alert(`${formData.name}, thank you for your interest in AlignersFit! We'll contact you shortly.`)
-    // Add your form submission logic here (e.g., API call)
+    setIsLoading(true)
+    
+    try {
+      const data = {
+        full_name: formData.name,
+        email: formData.email,
+        phone_no: formData.phone,
+        message: formData.message,
+      }
+      const response = await postContactForm(data)
+      if (response.status && response.status === 'success') {
+        toast.success('Message sent successfully', {
+          description: 'We will get back to you soon',
+        })
+        setFormData({
+          name: '',
+          email: '',
+          phone: '',
+          message: '',
+        })
+      } else {
+        toast.error('Message failed to send', {
+          description: 'Please try again',
+        })
+      }
+    } catch (error) {
+      console.log(error)
+      toast.error('Message failed to send', {
+        description: 'Please try again',
+      })
+    } finally {
+      setIsLoading(false)
+    }
   }
 
   return (
@@ -209,10 +242,43 @@ const ContactForm = () => {
               </div>
             </button> */}
 
-              <button type="submit" className="dsn-button" style={{cursor:"pointer"}}>
-                                    <span className="dsn-border border-color-default" />
-                                    <span className="text-button">Send Message</span>
-                                </button>
+            <button 
+              type="submit" 
+              className="dsn-button" 
+              style={{ cursor: isLoading ? "not-allowed" : "pointer" }}
+              disabled={isLoading}
+            >
+              <span className="dsn-border border-color-default" />
+              <span className="text-button">
+                {isLoading ? (
+                  <div className="flex items-center gap-2">
+                    <svg 
+                      className="animate-spin h-5 w-5" 
+                      xmlns="http://www.w3.org/2000/svg" 
+                      fill="none" 
+                      viewBox="0 0 24 24"
+                    >
+                      <circle 
+                        className="opacity-25" 
+                        cx="12" 
+                        cy="12" 
+                        r="10" 
+                        stroke="currentColor" 
+                        strokeWidth="4"
+                      />
+                      <path 
+                        className="opacity-75" 
+                        fill="currentColor" 
+                        d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"
+                      />
+                    </svg>
+                    Sending...
+                  </div>
+                ) : (
+                  'Send Message'
+                )}
+              </span>
+            </button>
           </div>
         </RevealWrapper>
       </div>

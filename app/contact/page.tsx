@@ -21,17 +21,14 @@ const ContactPage = () => {
         spacing="pt-[130px] md:pt-[180px] pb-20 sm:pb-32 md:pb-36 lg:pb-36 xl:pb-[100px] relative overflow-hidden"
       />
       <Map defaultCenter={{ lat: 43.8041, lng: -79.8088 }} mapKey="AIzaSyB41DRUbKWJHPxaFjMAwdrzWzbVKartNGg" />
-      <div className='grid grid-cols-1 gap-8 md:grid-cols-2 container'> 
+      <div className='grid grid-cols-1 gap-8 md:grid-cols-2 container '> 
         <ContactForm />
         <InfoBox className='col-span-1' /> 
       </div>
-      
-      {/* <CTA>
-        Transform your smile!
+      <div className='pb-64'>
+        
+      </div>
        
-        with AlignersFit.
-        <i className="block font-instrument italic max-md:inline-block max-sm:pl-2 sm:mt-10">Free consultation available!</i>
-      </CTA> */}
     </LayoutOne>
   )
 }

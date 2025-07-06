@@ -16,7 +16,16 @@ export default function ProductActions({ productId, productName, price }: Produc
 
   const handleAddToCart = () => {
     try {
-      useCartStore.getState().addItem({
+      const cartStore = useCartStore.getState()
+      const existingItem = cartStore.items.find(item => item.id === productId)
+      
+      if (existingItem) {
+        toast.info('This item is already in your cart!')
+        router.push('/cart')
+        return
+      }
+
+      cartStore.addItem({
         id: productId,
         name: productName,
         price: price,

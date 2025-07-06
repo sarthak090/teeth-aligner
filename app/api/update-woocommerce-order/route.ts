@@ -12,25 +12,19 @@ export async function PUT(request: NextRequest) {
   try {
     const body = await request.json()
     
-    // Support both URL params and request body for order ID
-    const url = new URL(request.url)
-    const pathParts = url.pathname.split('/')
-    const orderIdFromUrl = pathParts[pathParts.length - 1]
-    
-    const orderId = body.orderId || orderIdFromUrl
+    const orderId = body.orderId
     const status = body.status
     const paymentData = body.paymentData
-
-    if (!orderId) {
+    
+    if (!orderId || isNaN(Number(orderId)) || Number(orderId) <= 0) {
       return NextResponse.json(
-        { error: 'Order ID is required' },
+        { error: 'Valid order ID is required' },
         { status: 400 }
       )
     }
 
     // Prepare update data based on what's provided
     const updateData: any = {}
-    
     if (status) {
       updateData.status = status
       if (status === 'processing') {

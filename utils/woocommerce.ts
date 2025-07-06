@@ -11,6 +11,8 @@ export interface WooCommerceProduct {
   id: number
   name: string
   price: string
+  regular_price?: string
+  sale_price?: string
   description: string
   images: Array<{
     src: string
@@ -20,6 +22,17 @@ export interface WooCommerceProduct {
     id: number
     name: string
   }>
+  acf?: {
+    featured_icons?: any[]
+    whats_in_the_box?: any[]
+    [key: string]: any
+  }
+  global_content?: {
+    faqs?: any[]
+    customers?: any[]
+    gallery?: any[]
+    [key: string]: any
+  }
 }
 
 export interface WooCommerceOrder {
@@ -48,7 +61,7 @@ export interface WooCommerceOrder {
     country: string
   }
   line_items: Array<{
-    product_id: string
+    product_id: number
     quantity: number
     name: string
     price: number

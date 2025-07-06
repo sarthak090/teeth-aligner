@@ -60,19 +60,50 @@ function ProductDisplay() {
 
 export default async function InClinicPackageOne() {
   const productData = await getWooCommerceProductById(382)
-  if (!productData.success) {
+  if (!productData.success || !productData.product) {
     return <div>Product not found</div>
   }
   const product = productData.product
- const data = product.global_content
   
+  // Provide proper fallback values for the expected data structures
+  const data = product.global_content || { 
+    faqs: [],
+    customers: [],
+    gallery: []
+  }
+
+  // Default featured icons structure
+  const defaultFeaturedIcons = {
+    clear_aligners: { content: 'Custom-made, virtually invisible aligners that gradually straighten your teeth without metal brackets or wires.' },
+    digital_scanning: { content: 'Advanced 3D scanning technology for precise digital impressions of your teeth, eliminating messy traditional molds.' },
+    treatment_planning: { content: 'Personalized treatment plans with 3D visualization of your expected results before starting the journey.' },
+    remote_planning: { content: 'AI-powered progress tracking and virtual check-ins to ensure your treatment stays on track.' }
+  }
+
+  // Default whats in the box structure
+  const defaultWhatsInTheBox = {
+    chewie: { 
+      heading: 'Aligner Chewie',
+      description: 'Achieve a tighter, more comfortable fit with the AlignersFit™ Aligner Chewie — your go-to tool for getting the most out of your invisible aligners or retainers.'
+    },
+    retriver: { 
+      heading: 'Aligner Retriever',
+      description: 'Take the struggle out of removing your aligners with the AlignersFit™ Aligner Retriever — a compact, hygienic tool designed to make taking out your clear aligners or retainers effortless and mess-free.'
+    },
+    cleaning_foam: { 
+      heading: 'Aligner Cleaning Foam',
+      description: 'Keep your aligners fresh, clean, and crystal-clear with AlignersFit™ Teeth Aligner Foam Cleaner — your daily companion for a healthier, more hygienic smile.'
+    }
+  }
 
   const handleAddToCart = () => {
     try {
+      // check if product is in cart
+     
       useCartStore.getState().addItem({
         id: product.id.toString(),
         name: product.name,
-        price: product.price,
+        price: parseFloat(product.price),
         quantity: 1,
       })
       toast.success('Item added to cart successfully!')
@@ -80,6 +111,8 @@ export default async function InClinicPackageOne() {
       toast.error('Failed to add item to cart')
     }
   }
+
+  console.log('product', product)
 
   return (
     <LayoutOne>
@@ -97,22 +130,38 @@ export default async function InClinicPackageOne() {
               <div>
                 <h1 className="mb-4 text-6xl font-bold text-gray-900">{product.name}</h1>
                 <p className="text-xl text-gray-600">Professional teeth alignment treatment with expert supervision</p>
-              <div className="mt-6 flex gap-2 items-center">
-                <p className="text-4xl font-bold">${product.price}</p>
-                <p className="mt-2 text-sm text-gray-900">One-time payment or flexible financing available</p>
+              <div className="mt-6 space-y-2">
+                <div className="flex items-center gap-3">
+                  {(product as any).regular_price && (product as any).regular_price !== product.price ? (
+                    <>
+                      <p className="text-4xl font-bold text-green-600">${product.price}</p>
+                      <p className="text-2xl font-medium text-gray-400 line-through">${(product as any).regular_price}</p>
+                      <span className="px-2 py-1 text-sm font-medium text-white bg-red-500 rounded-md">
+                        Save ${(parseFloat((product as any).regular_price) - parseFloat(product.price)).toFixed(2)}
+                      </span>
+                    </>
+                  ) : (
+                    <p className="text-4xl font-bold text-gray-900">${product.price}</p>
+                  )}
+                </div>
+                <p className="text-sm text-gray-600">One-time payment or flexible financing available</p>
               </div>
               </div>
 
               {/* Pricing Section */}
 
               {/* Product Details Section */}
-              <ServicesV11 featured_icons={product.acf.featured_icons} />
+              <ServicesV11 featured_icons={
+                product.acf?.featured_icons && typeof product.acf.featured_icons === 'object' && !Array.isArray(product.acf.featured_icons) 
+                  ? product.acf.featured_icons 
+                  : defaultFeaturedIcons
+              } />
 
               {/* Enhanced CTA Section */}
               <ProductActions
-                productId={product.id}
-                productName={product.acf.product_name}
-                price={product.acf.pricing}
+                productId={product.id.toString()}
+                productName={product.name}
+                price={parseFloat(product.price)}
               />
             </div>
           </div>
@@ -121,11 +170,15 @@ export default async function InClinicPackageOne() {
          
         </div>
         <div className="grid grid-cols-1">
-          <IntheBoxHorizontalScroll whats_in_the_box={product.acf.whats_in_the_box} />
+          <IntheBoxHorizontalScroll whats_in_the_box={
+            product.acf?.whats_in_the_box && typeof product.acf.whats_in_the_box === 'object' && !Array.isArray(product.acf.whats_in_the_box)
+              ? product.acf.whats_in_the_box 
+              : defaultWhatsInTheBox
+          } />
         </div>
-        <FaqV1 data={data.faqs} />
+        <FaqV1 data={data.faqs || []} />
         {/* <Customer data={data.customers} /> */}
-        <OurWork data={data.gallery} />
+        <OurWork data={data.gallery || []} />
       </div>
     </LayoutOne>
   )

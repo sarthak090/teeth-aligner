@@ -50,7 +50,7 @@ function CheckoutFormContent({ items, total, onSuccess, paymentIntentId }: Check
     }
 
     try {
-      const response = await fetch(`/api/update-woocommerce-order/${orderId}`, {
+      const response = await fetch(`/api/update-woocommerce-order`, {
         method: 'PUT',
         headers: {
           'Content-Type': 'application/json',

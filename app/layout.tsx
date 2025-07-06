@@ -7,7 +7,7 @@ import type { Metadata } from 'next'
 import { ReactNode, Suspense } from 'react'
 import '../scss/main.scss'
 import ViewCanvas from '@/components/ObjViewer/ViewCanvas'
-
+import { Toaster } from 'sonner'
 export const metadata: Metadata = {
   title: 'AlignersFit',
 }
@@ -30,6 +30,7 @@ export default function RootLayout({
             </ThemeModeProvider>
           </SmoothScrollProvider>
         </Suspense>
+        <Toaster />
       </body>
     </html>
   )

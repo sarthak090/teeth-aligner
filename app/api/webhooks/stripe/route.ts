@@ -37,7 +37,7 @@ export async function POST(request: NextRequest) {
     switch (event.type) {
       case 'payment_intent.succeeded':
         const paymentIntent = event.data.object as Stripe.PaymentIntent
-        console.log('Payment succeeded:', paymentIntent.id)
+        // console.log('Payment succeeded:', paymentIntent.id)
         
         // Get order ID from metadata
         const orderId = paymentIntent.metadata.orderId

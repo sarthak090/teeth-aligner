@@ -91,7 +91,7 @@ const ServicesV11 = ({featured_icons}:Props) => {
     <section className="">
      
 
-      <div className="flex flex-wrap md:grid md:grid-cols-2 md:gap-2 justify-center  max-lg:gap-5 max-xl:[&>*:first-child]:border-r dark:max-xl:[&>*:first-child]:border-dark [&>*:last-child]:border-x dark:[&>*:last-child]:border-x-dark [&>*:not(:last-child)]:border-l dark:[&>*:not(:last-child)]:border-l-dark max-xl:[&>*:nth-child(2)]:border-r dark:max-xl:[&>*:nth-child(2)]:border-dark max-2xl:[&>*:nth-child(3)]:border-r dark:max-2xl:[&>*:nth-child(3)]:border-dark [&>*]:border-y dark:[&>*]:border-y-dark">
+      <div className="grid grid-cols-2 md:gap-2 justify-center  max-lg:gap-5 max-xl:[&>*:first-child]:border-r dark:max-xl:[&>*:first-child]:border-dark [&>*:last-child]:border-x dark:[&>*:last-child]:border-x-dark [&>*:not(:last-child)]:border-l dark:[&>*:not(:last-child)]:border-l-dark max-xl:[&>*:nth-child(2)]:border-r dark:max-xl:[&>*:nth-child(2)]:border-dark max-2xl:[&>*:nth-child(3)]:border-r dark:max-2xl:[&>*:nth-child(3)]:border-dark [&>*]:border-y dark:[&>*]:border-y-dark">
         {/* Service Card1 */}
 
         <RevealWrapper
@@ -127,14 +127,14 @@ const ServicesV11 = ({featured_icons}:Props) => {
                 
                 {service.icon}
                  
-                <h5 className="  text-2xl font-semibold text-primary flex justify-center items-center leading-[1.2] -tracking-[1.08px]">{service.title}</h5>
+                <h5 className="  text-2xl  text-center md:text-left font-semibold text-primary flex justify-center items-center leading-[1.2] -tracking-[1.08px]">{service.title}</h5>
                 {/* <p className='text-md'>{service.description}</p> */}
               </div>
               {/* Hover Back Side */}
               <div className="absolute z-10 h-full w-full flex-1 translate-y-full bg-orange-gradient px-[30px] py-4 transition-all duration-700 group-hover:inset-0 group-hover:translate-y-0 dark:bg-backgroundBody">
                
                 <h5 className="mb-3 mt-9 text-2xl leading-[1.2] -tracking-[1.08px] text-backgroundBody dark:text-secondary">
-                  {service.title}
+                  {service.title}  
                 </h5>
                 <p className="mb-10 text-backgroundBody dark:text-secondary">{service.description}</p>
                  

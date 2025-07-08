@@ -112,7 +112,7 @@ export default async function InClinicPackageOne() {
     }
   }
 
-  console.log('product', product)
+ 
 
   return (
     <LayoutOne>
@@ -134,7 +134,7 @@ export default async function InClinicPackageOne() {
                 <div className="flex items-center gap-3">
                   {(product as any).regular_price && (product as any).regular_price !== product.price ? (
                     <>
-                      <p className="text-4xl font-bold text-green-600">${product.price}</p>
+                      <p className="text-4xl font-bold text-primary">${product.price}</p>
                       <p className="text-2xl font-medium text-gray-400 line-through">${(product as any).regular_price}</p>
                       <span className="px-2 py-1 text-sm font-medium text-white bg-red-500 rounded-md">
                         Save ${(parseFloat((product as any).regular_price) - parseFloat(product.price)).toFixed(2)}

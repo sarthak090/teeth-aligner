@@ -40,7 +40,7 @@ export default function ProductActions({ productId, productName, price }: Produc
   }
 
   return (
-    <RevealWrapper className="reveal-me mt-7 md:mt-14">
+    < div className="reveal-me mt-7 md:mt-14">
       <button
         onClick={handleAddToCart}
         className="rv-button rv-button-secondary mt-10 w-full"
@@ -52,6 +52,6 @@ export default function ProductActions({ productId, productName, price }: Produc
           <span className="!font-normal">Order Now</span>
         </div>
       </button>
-    </RevealWrapper>
+    </ div>
   )
 } 

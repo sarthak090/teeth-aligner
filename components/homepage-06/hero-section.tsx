@@ -25,7 +25,7 @@ export default function HeroSection({ data }: { data?: Data }) {
       <HeroBgVideo />
       </div>
       
-      <div className="z-[10] flex h-screen flex-col items-center justify-center md:items-start ">
+      <div className="z-[10] mt-12 md:mt-0 flex h-screen flex-col w-full items-center justify-center md:items-start ">
         <div className="left-[-180px] top-[180px] -z-10 hidden h-[600px] w-[600px] rounded-full bg-gradient-to-br from-[#005BD1] via-[#FFCB90] to-[#FF0004] opacity-50 blur-3xl md:absolute md:block"></div>
         <div className="right-[-180px] top-[100px] -z-10 hidden h-[600px] w-[600px] rounded-full bg-gradient-to-br from-[#005BD1] via-[#FFCB90] to-[#FF0004] opacity-50 blur-3xl md:absolute md:block"></div>
 

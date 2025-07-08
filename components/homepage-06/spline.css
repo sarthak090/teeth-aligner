@@ -45,18 +45,18 @@
 
 @media (min-width: 1280px) {
     .spline-container {
-      height: 72%;
+      height: 66%;
       
       transform: translateX(300px) translateY(-58%);
     }
   }
 @media (min-width: 1400px) {
   .spline-container {
-    height: 74%;
+    height: 66%;
     right: 0; 
     left: 0;
     width: 100%;
-    transform: translateX(330px) translateY(-55%);
+    transform: translateX(330px) translateY(-53%);
   }
   .heading-text{
     font-size: 7.2rem !important;

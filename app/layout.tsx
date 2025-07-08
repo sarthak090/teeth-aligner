@@ -6,7 +6,7 @@ import { ThemeModeProvider } from '@/utils/Providers'
 import type { Metadata } from 'next'
 import { ReactNode, Suspense } from 'react'
 import '../scss/main.scss'
-import ViewCanvas from '@/components/ObjViewer/ViewCanvas'
+import { SpeedInsights } from "@vercel/speed-insights/next"
 import { Toaster } from 'sonner'
 export const metadata: Metadata = {
   title: 'AlignersFit',
@@ -26,6 +26,7 @@ export default function RootLayout({
               {/* <ThemeSwitcher /> */}
               <CursorPointer />
               {children}
+              <SpeedInsights />
               {/* <ViewCanvas/> */}
             </ThemeModeProvider>
           </SmoothScrollProvider>

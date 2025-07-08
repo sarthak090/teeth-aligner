@@ -8,6 +8,7 @@ import { ReactNode, Suspense } from 'react'
 import '../scss/main.scss'
 import { SpeedInsights } from "@vercel/speed-insights/next"
 import { Toaster } from 'sonner'
+import { Analytics } from "@vercel/analytics/react"
 export const metadata: Metadata = {
   title: 'AlignersFit',
 }
@@ -32,6 +33,7 @@ export default function RootLayout({
           </SmoothScrollProvider>
         </Suspense>
         <Toaster />
+        <Analytics />
       </body>
     </html>
   )

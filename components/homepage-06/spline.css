@@ -119,4 +119,14 @@
         transform: translateX(0%) translateY(-15rem) !important;
           
        }
-}   
+}  
+
+@media (max-width: 400px) {
+    .spline-container {
+        height: 33% !important;
+         
+   
+        transform: translateX(0%) translateY(-20rem) !important;
+          
+       }
+}

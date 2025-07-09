@@ -97,8 +97,8 @@ const Footer = () => {
         </div>
       </div>
 
-      <div className="absolute bottom-0 w-full  ">
-        <div className="flex justify-between gap-4 px-10 !py-4 container mx-auto">
+      <div className="absolute bottom-0 w-full   ">
+        <div className=" flex flex-col   items-center md:flex-row justify-between gap-4 px-10 !py-4 container mx-auto">
           <div className="flex flex-col gap-4">
             <small className="text-md font-semibold text-white">
               Copyright © 2025,{' '}

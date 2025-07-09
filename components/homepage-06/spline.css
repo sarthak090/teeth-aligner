@@ -135,7 +135,7 @@
 
 @media (max-width: 400px) {
   .spline-container {
-      height: 33% !important;
+      height: 38% !important;
 
       
  
@@ -145,6 +145,6 @@
 
      .heading-text{
       font-size: 2.5rem !important;
-      margin-top: 12rem !important;
+      margin-top: 16rem !important;
   }
 }

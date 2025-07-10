@@ -1,7 +1,6 @@
 import CursorPointer from '@/components/animation/CursorPointer'
 import SmoothScrollProvider from '@/components/shared/SmoothScroll'
-import ThemeSwitcher from '@/components/theme/ThemeSwitcher'
-import { satoshi } from '@/utils/fonts'
+ import { satoshi } from '@/utils/fonts'
 import { ThemeModeProvider } from '@/utils/Providers'
 import type { Metadata } from 'next'
 import { ReactNode, Suspense } from 'react'
@@ -11,6 +10,8 @@ import { Toaster } from 'sonner'
 import { Analytics } from "@vercel/analytics/react"
 export const metadata: Metadata = {
   title: 'AlignersFit',
+  description: 'AlignersFit is a platform for finding the best aligners for your teeth',
+ 
 }
 
 export default function RootLayout({
@@ -20,15 +21,18 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
+      <head>
+        <meta name="robots" content="noindex, nofollow" />
+      </head>
       <body className={`${satoshi.variable} antialiased`}>
         <Suspense fallback={<div>Loading...</div>}>
           <SmoothScrollProvider>
             <ThemeModeProvider>
-              {/* <ThemeSwitcher /> */}
+               
               <CursorPointer />
               {children}
               <SpeedInsights />
-              {/* <ViewCanvas/> */}
+             
             </ThemeModeProvider>
           </SmoothScrollProvider>
         </Suspense>

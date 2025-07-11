@@ -97,7 +97,7 @@ const HomePage = async () => {
       <FAQ data={globalData.faqs} />
       <Customer data={globalData.before_and_after} />
 
-      <OurWork data={globalData.gallery} />
+      {/* <OurWork data={globalData.gallery} /> */}
 
       {/* <TestimonialV6 /> 
       <ClientsV3 /> */}

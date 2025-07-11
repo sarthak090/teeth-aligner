@@ -178,7 +178,7 @@ export default async function InClinicPackageOne() {
         </div>
         <FaqV1 data={data.faqs || []} />
         {/* <Customer data={data.customers} /> */}
-        {/* <OurWork data={data.gallery || []} /> */}
+        <OurWork data={data.gallery || []} />
       </div>
     </LayoutOne>
   )

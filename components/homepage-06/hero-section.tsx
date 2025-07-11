@@ -22,7 +22,7 @@ export default function HeroSection({ data }: { data?: Data }) {
   return (
     <div className="hero-section relative  px-4 md:px-16 flex items-center md:min-h-[900px]" ref={heroSectionRef}>
       <div className=''>
-      <HeroBgVideo />
+       <HeroBgVideo />
       </div>
       
       <div className="z-[10] mt-12 md:mt-0 flex h-screen flex-col w-full items-center justify-center md:items-start ">

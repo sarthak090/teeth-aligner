@@ -34,6 +34,18 @@ export const getPageDataById = async (id:string)=>{
     return data
 }
 
+export const getAllPages = async ()=>{
+    const res = await fetch(`${process.env.NEXT_PUBLIC_CMS_URL}/pages`)
+    const data = await res.json()
+    return data
+}
+
+export const getPageDataBySlug = async (slug:string)=>{
+    const res = await fetch(`${process.env.NEXT_PUBLIC_CMS_URL}/pages?slug=${slug}`)
+    const data = await res.json()
+    return data
+}
+
 export const getBlogs = async () => {
     const res = await fetch(`${process.env.NEXT_PUBLIC_CMS_URL}/posts?acf_format=standard`)
     const data = await res.json()

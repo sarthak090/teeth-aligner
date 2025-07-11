@@ -18,14 +18,14 @@ export interface TermsDataType {
 
 // const termsData: TermsDataType[] = getMarkDownData('data/policy')
 
-const FAQPage = async () => {
+const TermsPage = async () => {
 
   const termsData = await getPageDataById('305')
   const faqs = termsData.acf.faqs
   
   return (
     <LayoutOne>
-      <PageHero title="Terms & " italicTitle="Privacy" badgeTitle="" scale />
+      <PageHero title="Terms & Conditions " italicTitle="" badgeTitle="" scale />
       <TermsPolicyBody termsData={termsData.content.rendered} heading={true}  headingContent={termsData.acf.heading} />
       {faqs &&  <FAQ data={faqs} />}
       
@@ -33,4 +33,4 @@ const FAQPage = async () => {
   )
 }
 
-export default FAQPage
+export default TermsPage
